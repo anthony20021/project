@@ -3,8 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="6"
-	 last-position="0,0" last-zoom="0.65"
+<dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="8"
+	 last-position="151,0" last-zoom="0.65" scene-rect="0,0,1570.8,1358.52"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -39,20 +39,20 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Users" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="320" y="260"/>
+	<position x="360" y="440"/>
 	<column name="id" not-null="true" sequence="public.users_seq">
 		<type name="integer" length="0"/>
-	</column>
-	<column name="last_name">
-		<type name="varchar" length="0"/>
-	</column>
-	<column name="email" not-null="true">
-		<type name="varchar" length="0"/>
 	</column>
 	<column name="first_name">
 		<type name="varchar" length="0"/>
 	</column>
+	<column name="last_name">
+		<type name="varchar" length="0"/>
+	</column>
 	<column name="password">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="email" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
 	<constraint name="pk_users" type="pk-constr" table="public.&quot;Users&quot;">
@@ -71,7 +71,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Recettes_ingrédients" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="1200" y="320"/>
+	<position x="1140" y="140"/>
 	<column name="recette_id" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
@@ -114,10 +114,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="&quot;user&quot;"/>
 </sequence>
 
-<table name="Recettes" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+<table name="Recettes" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="800" y="300"/>
+	<position x="840" y="440"/>
 	<column name="id" not-null="true" sequence="public.seq_recettes">
 		<type name="integer" length="0"/>
 	</column>
@@ -131,7 +131,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="text" length="0"/>
 	</column>
 	<column name="created_at">
-		<type name="date" length="0"/>
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="temps_preparation">
+		<type name="smallint" length="0"/>
 	</column>
 	<column name="user_id">
 		<type name="integer" length="0"/>
@@ -141,18 +144,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="Commentaires" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+<table name="Commentaires" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="580" y="620"/>
+	<position x="600" y="120"/>
 	<column name="id" not-null="true" sequence="public.seq_commentaire">
 		<type name="integer" length="0"/>
 	</column>
 	<column name="content">
 		<type name="text" length="0"/>
 	</column>
+	<column name="note">
+		<type name="integer" length="0"/>
+	</column>
 	<column name="created_at">
-		<type name="date" length="0"/>
+		<type name="timestamp" length="0"/>
 	</column>
 	<column name="user_id">
 		<type name="integer" length="0"/>
@@ -162,6 +168,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<constraint name="pk_commentid" type="pk-constr" table="public.&quot;Commentaires&quot;">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Favories" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+	<position x="600" y="760"/>
+	<column name="user_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="recette_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_user_recette_id" type="pk-constr" table="public.&quot;Favories&quot;">
+		<columns names="user_id,recette_id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
@@ -195,6 +216,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="fk_user_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Users&quot;" table="public.&quot;Favories&quot;">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_recette_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Favories&quot;">
+	<columns names="recette_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="&quot;rel_Recettes_users&quot;" type="relfk" layers="0"
 	 src-table="public.&quot;Recettes&quot;"
 	 dst-table="public.&quot;Users&quot;" reference-fk="fk_user"
@@ -219,5 +252,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-table="public.&quot;Commentaires&quot;"
 	 dst-table="public.&quot;Recettes&quot;" reference-fk="fk_recetteid"
 	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Favories_Users&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Favories&quot;"
+	 dst-table="public.&quot;Users&quot;" reference-fk="fk_user_id"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="&quot;rel_Favories_Recettes&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Favories&quot;"
+	 dst-table="public.&quot;Recettes&quot;" reference-fk="fk_recette_id"
+	 src-required="false" dst-required="true"/>
 
 </dbmodel>
