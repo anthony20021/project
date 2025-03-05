@@ -4,8 +4,9 @@ from app.database import Base
 
 class Ingredient(Base):
     __tablename__ = 'Ingredients'
-    
-    ingredient_id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
     
-    recette = relationship("Recette_ingredients", back_populates="Ingredient")
+    recette = relationship("Recette_ingredient", back_populates="ingredient")
+
+from app.models.recette_ingredient import Recette_ingredient

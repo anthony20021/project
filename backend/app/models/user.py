@@ -12,6 +12,10 @@ class User(Base):
     first_name = Column(String, nullable=True)
     password = Column(String, nullable=True)
     
-    recettes = relationship("Recette", back_populates="User")
-    commentaires = relationship("Commentaire", back_populates="User")
-    favories = relationship("Favories", back_populates="User")
+    recettes = relationship("Recette", back_populates="user")
+    commentaires = relationship("Commentaire", back_populates="user")
+    favories = relationship("Favorie", back_populates="user")
+
+from app.models.recette import Recette 
+from app.models.commentaires import Commentaire
+from app.models.favorie import Favorie
