@@ -4,7 +4,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
 <dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="8"
-	 last-position="151,0" last-zoom="0.65" scene-rect="0,0,1570.8,1358.52"
+	 last-position="0,0" last-zoom="0.65" scene-rect="0,0,1570.8,1358.52"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
