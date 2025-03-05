@@ -3,8 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="4"
-	 last-position="0,0" last-zoom="0.65"
+<dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="6"
+	 last-position="144,0" last-zoom="0.65"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -36,10 +36,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="&quot;user&quot;"/>
 </sequence>
 
-<table name="users" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+<table name="users" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="940" y="420"/>
+	<position x="320" y="260"/>
 	<column name="id" not-null="true" sequence="public.users_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -52,9 +52,172 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="first_name">
 		<type name="varchar" length="0"/>
 	</column>
+	<column name="password">
+		<type name="varchar" length="0"/>
+	</column>
 	<constraint name="pk_users" type="pk-constr" table="public.users">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+	<constraint name="unique_email" type="uq-constr" table="public.users">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
 </table>
+
+<sequence name="seq_recettes" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+</sequence>
+
+<table name="Recettes_ingrédients" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+	<position x="1200" y="320"/>
+	<column name="recette_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="ingredient_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="quantity">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="pk_recette_ingredient" type="pk-constr" table="public.&quot;Recettes_ingrédients&quot;">
+		<columns names="recette_id,ingredient_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="seq_ingredient" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+</sequence>
+
+<table name="ingrédients" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+	<position x="1240" y="740"/>
+	<column name="id" not-null="true" sequence="public.seq_ingredient">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="pk_ingredient" type="pk-constr" table="public.&quot;ingrédients&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="unique_name" type="uq-constr" table="public.&quot;ingrédients&quot;">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="seq_commentaire" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+</sequence>
+
+<table name="Recettes" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+	<position x="800" y="300"/>
+	<column name="id" not-null="true" sequence="public.seq_recettes">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="titre">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="description">
+		<type name="text" length="0"/>
+	</column>
+	<column name="instructions">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="date" length="0"/>
+	</column>
+	<column name="user_id">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_recettes" type="pk-constr" table="public.&quot;Recettes&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Commentaires" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="&quot;user&quot;"/>
+	<position x="580" y="620"/>
+	<column name="id" not-null="true" sequence="public.seq_commentaire">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="content">
+		<type name="text" length="0"/>
+	</column>
+	<column name="created_at">
+		<type name="date" length="0"/>
+	</column>
+	<column name="user_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="recipes_id">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_commentid" type="pk-constr" table="public.&quot;Commentaires&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_user" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.&quot;Recettes&quot;">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_recettesid" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Recettes_ingrédients&quot;">
+	<columns names="recette_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_ingredientid" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;ingrédients&quot;" table="public.&quot;Recettes_ingrédients&quot;">
+	<columns names="ingredient_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_userid" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.users" table="public.&quot;Commentaires&quot;">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_recetteid" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Commentaires&quot;">
+	<columns names="recipes_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_Recettes_users&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Recettes&quot;"
+	 dst-table="public.users" reference-fk="fk_user"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Recettes_ingrédients_Recettes&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Recettes_ingrédients&quot;"
+	 dst-table="public.&quot;Recettes&quot;" reference-fk="fk_recettesid"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Recettes_ingrédients_ingrédients&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Recettes_ingrédients&quot;"
+	 dst-table="public.&quot;ingrédients&quot;" reference-fk="fk_ingredientid"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Commentaires_users&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Commentaires&quot;"
+	 dst-table="public.users" reference-fk="fk_userid"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Commentaires_Recettes&quot;" type="relfk" layers="0"
+	 src-table="public.&quot;Commentaires&quot;"
+	 dst-table="public.&quot;Recettes&quot;" reference-fk="fk_recetteid"
+	 src-required="false" dst-required="false"/>
 
 </dbmodel>
