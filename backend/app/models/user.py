@@ -10,5 +10,5 @@ class User(Base):
     first_name = Column(String, nullable=True)
     password = Column(String, nullable=True)
     
-    recettes = relationship("Recette", back_populates="user")
-    comments = relationship("Comment", back_populates="user")
+    #recettes = relationship("Recette", back_populates="user")
+    #comments = relationship("Comment", back_populates="user")
