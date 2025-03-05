@@ -68,7 +68,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="&quot;user&quot;"/>
 </sequence>
 
-<table name="Recettes_ingrédients" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+<table name="Recettes_ingredients" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
 	<position x="1140" y="140"/>
@@ -81,7 +81,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="quantity">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="pk_recette_ingredient" type="pk-constr" table="public.&quot;Recettes_ingrédients&quot;">
+	<constraint name="pk_recette_ingredient" type="pk-constr" table="public.&quot;Recettes_ingredients&quot;">
 		<columns names="recette_id,ingredient_id" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -91,7 +91,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<role name="&quot;user&quot;"/>
 </sequence>
 
-<table name="Ingrédients" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+<table name="Ingredients" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
 	<position x="1240" y="740"/>
@@ -101,10 +101,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="name">
 		<type name="varchar" length="0"/>
 	</column>
-	<constraint name="pk_ingredient" type="pk-constr" table="public.&quot;Ingrédients&quot;">
+	<constraint name="pk_ingredient" type="pk-constr" table="public.&quot;Ingredients&quot;">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="unique_name" type="uq-constr" table="public.&quot;Ingrédients&quot;">
+	<constraint name="unique_name" type="uq-constr" table="public.&quot;Ingredients&quot;">
 		<columns names="name" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -187,13 +187,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <constraint name="fk_recettesid" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Recettes_ingrédients&quot;">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Recettes_ingredients&quot;">
 	<columns names="recette_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="fk_ingredientid" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Ingrédients&quot;" table="public.&quot;Recettes_ingrédients&quot;">
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Ingredients&quot;" table="public.&quot;Recettes_ingredients&quot;">
 	<columns names="ingredient_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
@@ -234,13 +234,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-required="false" dst-required="false"/>
 
 <relationship name="&quot;rel_Recettes_ingrédients_Recettes&quot;" type="relfk" layers="0"
-	 src-table="public.&quot;Recettes_ingrédients&quot;"
+	 src-table="public.&quot;Recettes_ingredients&quot;"
 	 dst-table="public.&quot;Recettes&quot;" reference-fk="fk_recettesid"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="&quot;rel_Recettes_ingrédients_ingrédients&quot;" type="relfk" layers="0"
-	 src-table="public.&quot;Recettes_ingrédients&quot;"
-	 dst-table="public.&quot;Ingrédients&quot;" reference-fk="fk_ingredientid"
+	 src-table="public.&quot;Recettes_ingredients&quot;"
+	 dst-table="public.&quot;Ingredients&quot;" reference-fk="fk_ingredientid"
 	 src-required="false" dst-required="false"/>
 
 <relationship name="&quot;rel_Commentaires_users&quot;" type="relfk" layers="0"
