@@ -12,3 +12,6 @@ def get_user_by_id(db: Session, user_id: int):
 
 def create_new_user(db: Session, user: UserCreate):
     return crud.create_user(db, user)
+
+def login_user(db: Session, user_email: str, user_password: str):
+    return crud.login(db, user_email, user_password)

@@ -12,7 +12,7 @@ class Recette(Base):
     instructions = Column(String, nullable=True)
     created_at = Column(datetime, default=datetime.now(timezone.utc))
 
-    user = relationship("User", back_populates="Recette")
+    # user = relationship("User", back_populates="Recette")
     commentaires = relationship("Commentaire", back_populates="Recette")
     favories = relationship("Favorie", back_populates="Recette")
     recettes_ingrédients = relationship("Recette_ingredient", back_populates="Recette")
