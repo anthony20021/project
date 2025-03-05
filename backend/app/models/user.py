@@ -13,5 +13,5 @@ class User(Base):
     password = Column(String, nullable=True)
     
     recettes = relationship("Recette", back_populates="User")
-    # commentaires = relationship("Commentaire", back_populates="User")
-    # favories = relationship("Favories", back_populates="User")
+    commentaires = relationship("Commentaire", back_populates="User")
+    favories = relationship("Favories", back_populates="User")
