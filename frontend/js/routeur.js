@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         home: 'template/home.html',
         recettes: 'template/recette.html',
         login: 'template/login.html',
-        register : 'template/register.html'
+        register: 'template/register.html'
     };
 
     // Fonction pour charger le contenu d'une page
@@ -24,12 +24,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Ajouter la nouvelle route dans l'historique
                     window.history.pushState({}, page, `#${page}`);
+
+                    // Recharger les scripts JS associés après avoir injecté le HTML
+                    loadScript(page);
                 })
                 .catch(error => {
                     console.error("Erreur lors du chargement de la page:", error);
                 });
         } else {
+            console.log("Route non trouvée");
         }
+    }
+
+    // Fonction pour charger dynamiquement un script JS
+    function loadScript(page) {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = `../js/${page}.js`; // Assurer que le fichier JS est dans le bon dossier
+        scriptElement.onload = () => {
+        };
+        scriptElement.onerror = () => {
+            console.error(`Erreur de chargement du script ${page}.js`);
+        };
+        document.body.appendChild(scriptElement); // Ajouter le script au DOM
     }
 
     // Ajouter les événements de clic sur les liens
