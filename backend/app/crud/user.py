@@ -1,8 +1,11 @@
 import bcrypt
+import jwt
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas import UserCreate
 from sqlalchemy.exc import IntegrityError
+
+SECRET_KEY = "b9c65df28c1984823631f3c2911146c8a610d35f9ef90b9df578fc918eccb8d4"
 
 def get_user(db: Session, user_id: int):
     try:
@@ -29,3 +32,18 @@ def create_user(db: Session, user: UserCreate):
         if db_user:
             db.refresh(db_user)  
     return db_user
+
+def login(db: Session, email: str, password: str):
+    try:
+        user = db.query(User).filter(User.email == email).first()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            token = jwt.encode({
+                'user_id': user.id,
+                'exp': datetime.utcnow() + timedelta(hours=24)  # Le jeton expire après 24 heures
+            }, SECRET_KEY, algorithm='HS256')
+            return {'token': token}
+        else:
+            return {'error': 'Invalid credentials'}
+    except Exception as e:
+        print(f"Une erreur s'est produite : {e}")
+        return {'error': 'An error occurred'}
