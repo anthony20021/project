@@ -13,6 +13,8 @@ services:
       - "5434:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      # Ajout d'un volume pour les fichiers de configuration ou scripts SQL, si nécessaire
+      - ./postgres-data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
@@ -24,6 +26,10 @@ services:
       DATABASE_URL: postgresql://user:password@postgres:5432/mydatabase
     ports:
       - "8000:8000"
+    volumes:
+      # Montage du code du backend, ce qui permet d'éviter de redémarrer le conteneur
+      - ./backend:/app  # Assure-toi que ce soit le bon répertoire pour ton code backend
+      - ./backend/requirements.txt:/app/requirements.txt  # Si tu veux synchroniser tes dépendances directement
 
   frontend:
     build: ./frontend
@@ -33,6 +39,10 @@ services:
       - "80:80"
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/usr/share/nginx/html  # Monte le dossier frontend local dans le conteneur
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf  # Monte le fichier de config nginx
+
 
 volumes:
   pg_data:

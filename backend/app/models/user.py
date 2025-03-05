@@ -8,4 +8,5 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
+    password = Column(String)
     

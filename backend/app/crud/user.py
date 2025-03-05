@@ -13,15 +13,17 @@ def create_user(db: Session, user: UserCreate):
     try:
         db_user = User(last_name=user.last_name, email=user.email, first_name=user.first_name)
         db.add(db_user)
-        db.commit()
+        db.commit()  
     except IntegrityError as e:
-        db.rollback()  
+        db.rollback() 
         print(f"Erreur d'intégrité : {e.orig}")
     except Exception as e:
-        db.rollback()
+        db.rollback()  # Annuler en cas d'autres erreurs
         print(f"Une erreur s'est produite : {e}")
+        db_user = None 
     else:
         print("Utilisateur créé avec succès.")
     finally:
-        db.refresh(db_user)
+        if db_user:
+            db.refresh(db_user)  
     return db_user
