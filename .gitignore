@@ -1,2 +1,13 @@
-backend/app/.env
-frontend/app/.env
+
+*.env
+
+__pycache__/
+
+postgres-data/
+
+backend/app/__pycache__/
+backend/crud/__pycache__/
+
+.vscode/
+.idea/
+*.swp
