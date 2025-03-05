@@ -1,5 +1,6 @@
 import bcrypt
 import jwt
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas import UserCreate
@@ -16,7 +17,7 @@ def get_user(db: Session, user_id: int):
 def create_user(db: Session, user: UserCreate):
     try:
         hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
-        db_user = User(last_name=user.last_name, password=hashed_password, email=user.email, first_name=user.first_name)
+        db_user = User(last_name=user.last_name, password=hashed_password.decode('utf-8'), email=user.email, first_name=user.first_name)
         db.add(db_user)
         db.commit()  
     except IntegrityError as e:
