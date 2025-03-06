@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         recettes: "template/recette.html",
         login: "template/login.html",
         register: "template/register.html",
+        favori: "template/favori.html"
     };
 
     async function loadPage(page) {

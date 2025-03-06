@@ -12,3 +12,9 @@ def get_commentaire_all(db: Session, recette_id: int):
 
 def create_new_commentaire(db: Session, commentaire: CommentaireCreate):
     return crud.create_commentaire(db, commentaire)
+
+def modify_comment(db: Session, commentaire_id: int, commentaire: CommentaireCreate):
+    return crud.modify_commentaire(db, commentaire_id, commentaire)
+
+def delete_comment(db: Session, commentaire_id: int):
+    return crud.delete_commentaire(db, commentaire_id)
