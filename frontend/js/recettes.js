@@ -110,15 +110,14 @@ export function init() {
             }
             detailsHTML += `</ul>`;
 
-            // Vérifier si l'utilisateur connecté est le propriétaire de la recette
             if (user_id === recette.user_id) {
                 // Ajouter le formulaire d'ajout d'ingrédient
                 detailsHTML += `
-                <div id="addIngredientForm">
+                <div id="addIngredientForm" class="form-container">  <!-- Classe pour le formulaire -->
                     <h4>Ajouter un ingrédient</h4>
-                    <select id="ingredientSelect"></select>
-                    <input type="number" id="ingredientQuantity" placeholder="Quantité" />
-                    <button id="addIngredientButton">Ajouter l'ingrédient</button>
+                    <select id="ingredientSelect" class="form-select"></select> <!-- Classe pour le select -->
+                    <input type="number" id="ingredientQuantity" class="form-input" placeholder="Quantité" /> <!-- Classe pour l'input -->
+                    <button id="addIngredientButton" class="form-button">Ajouter l'ingrédient</button> <!-- Classe pour le bouton -->
                 </div>
                 `;
             }
