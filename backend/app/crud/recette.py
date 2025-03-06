@@ -7,10 +7,18 @@ from app.schemas import RecetteCreate
 
 def read_recette(db: Session, recette_id: int):
     try:
-        return db.query(Recette).filter(Recette.id == recette_id).first()
+        return (
+            db.query(Recette)
+            .filter(Recette.id == recette_id)
+            .options(
+                joinedload(Recette.recettes_ingredients)  # Charge la relation recette_ingredient
+                .joinedload("ingredient")  # Charge les ingrédients liés
+            )
+            .first()
+        )
     except Exception as e:
         print(f"Une erreur s'est produite : {e}")
-
+        return None
 
 def create_recette(db: Session, recette: RecetteCreate, user_id):
     db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type, user_id=user_id)
