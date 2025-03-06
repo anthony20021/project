@@ -116,7 +116,7 @@ export function init() {
                 <div id="addIngredientForm" class="form-container">  <!-- Classe pour le formulaire -->
                     <h4>Ajouter un ingrédient</h4>
                     <select id="ingredientSelect" class="form-select"></select> <!-- Classe pour le select -->
-                    <input type="number" id="ingredientQuantity" class="form-input" placeholder="Quantité" /> <!-- Classe pour l'input -->
+                    <input type="text" id="ingredientQuantity" class="form-input" placeholder="Quantité (exemple : 60g)" /> <!-- Classe pour l'input -->
                     <button id="addIngredientButton" class="form-button">Ajouter l'ingrédient</button> <!-- Classe pour le bouton -->
                 </div>
                 `;
@@ -162,7 +162,7 @@ export function init() {
                         const postData = {
                             recette_id: recette.id,
                             ingredient_id: parseInt(selectedIngredientId),
-                            quantity: parseInt(quantity, 10)
+                            quantity: quantity
                         };
                         const addResult = await post('recettes/ingredients', postData);
                         if (addResult.status !== 200) {
