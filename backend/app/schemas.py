@@ -72,3 +72,23 @@ class Recette_ingredient(BaseModel):
 
 class Recette_ingredientCreate(Recette_ingredient):
     pass
+
+
+class Favorie(BaseModel):
+    user_id: int
+    recette_id: int
+
+class FavorieCreate(Favorie):
+    pass
+
+class FavorieRead(Favorie):
+    class Config:
+        orm_mode = True
+        schema_extra = {
+            "example": {
+                "user_id": 1,
+                "recette_id": 1
+            }
+        }
+
+        
