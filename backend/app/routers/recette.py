@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
-from app.controllers.recette import create_recette, get_recette_by_id, list_recettes
+from app.controllers.recette import create_recette, get_recette_by_id, list_recettes, delete_recette, update_recette
 from app.database import SessionLocal
 from app.Middleware.middleware import check_token
 
@@ -34,3 +34,11 @@ def create_recette_endpoint(
 @router.get("/recettes/")
 def list_recettes_endpoint(db: Session = Depends(get_db)):
     return list_recettes(db)
+
+@router.delete("/recettes/")
+def delete_recette_endpoint(recette_id: int, db: Session = Depends(get_db)):
+    return delete_recette(db, recette_id)
+
+@router.put("/recettes/")
+def update_recette_endpoint(recette_id: int, recette: schemas.RecetteCreate, db: Session = Depends(get_db)):
+    return update_recette(db, recette_id, recette)
