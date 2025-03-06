@@ -14,6 +14,6 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/recettes/{recette_id}/ingredients/")
+@router.post("/recettes/ingredients/")
 def create_recette_ingredient_endpoint(recette_ingredient: schemas.Recette_ingredientCreate, db: Session = Depends(get_db), token: str = Depends(check_token)):
     return create_recette_ingredient(db, recette_ingredient)
