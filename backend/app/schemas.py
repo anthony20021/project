@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from datetime import date, datetime
  
 class UserBase(BaseModel):
     email: str
@@ -53,6 +54,16 @@ class Recette(RecetteBase):
                 "temps_preparation": 30
             }
         }
+
+class CommentaireBase(BaseModel):
+    content: str
+    note: int
+    created_at: date
+    user_id: int
+    recipes_id: int
+ 
+class CommentaireCreate(CommentaireBase):
+    pass
 
 class Recette_ingredient(BaseModel):
     recette_id: int
