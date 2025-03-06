@@ -4,7 +4,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
 <dbmodel pgmodeler-ver="1.1.4" use-changelog="false" max-obj-count="8"
-	 last-position="0,0" last-zoom="0.55" scene-rect="0,0,1570.8,1358.52"
+	 last-position="266,70" last-zoom="0.7" scene-rect="0,0,1627.03,1358.52"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -39,7 +39,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Users" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="360" y="440"/>
+	<position x="460" y="420"/>
 	<column name="id" not-null="true" sequence="public.users_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -71,7 +71,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Recettes_ingredients" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="1140" y="140"/>
+	<position x="1240" y="120"/>
 	<column name="recette_id" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
@@ -94,7 +94,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Ingredients" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="1240" y="740"/>
+	<position x="1340" y="720"/>
 	<column name="id" not-null="true" sequence="public.seq_ingredient">
 		<type name="integer" length="0"/>
 	</column>
@@ -117,7 +117,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Recettes" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="840" y="440"/>
+	<position x="940" y="420"/>
 	<column name="id" not-null="true" sequence="public.seq_recettes">
 		<type name="integer" length="0"/>
 	</column>
@@ -150,7 +150,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Commentaires" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="600" y="120"/>
+	<position x="700" y="100"/>
 	<column name="id" not-null="true" sequence="public.seq_commentaire">
 		<type name="integer" length="0"/>
 	</column>
@@ -177,7 +177,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="Favories" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
 	<schema name="public"/>
 	<role name="&quot;user&quot;"/>
-	<position x="600" y="760"/>
+	<position x="700" y="740"/>
 	<column name="user_id" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
