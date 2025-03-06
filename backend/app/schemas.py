@@ -14,3 +14,18 @@ class User(UserBase):
 
     class Config:
         orm_mode = True  
+
+#RECETTE
+class RecetteBase(BaseModel):
+    titre: str
+    description: Optional[str] = None
+    instructions: Optional[str] = None
+
+class RecetteCreate(RecetteBase):
+    pass
+
+class Recette(RecetteBase):
+    id: int
+
+    class Config:
+        orm_mode = True 
