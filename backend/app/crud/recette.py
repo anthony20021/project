@@ -31,5 +31,28 @@ def create_recette(db: Session, recette: RecetteCreate):
     return db_recette
 
 #lister toutes les recettes
+
+def list_recettes(db: Session):
+    """Récupère toutes les recettes de la base de données."""
+    try:
+        return db.query(Recette).all()
+    except Exception as e:
+        print(f"Une erreur s'est produite : {e}")
+        return []
+
+
+#lister les recettes par type
+def list_recettes_by_type(db: Session, recette_type: str):
+    """Récupère toutes les recettes d'un type donné."""
+    try:
+        return db.query(Recette).filter(Recette.type == recette_type).all()
+    except Exception as e:
+        print(f"Une erreur s'est produite : {e}")
+        return []
+
+
+
+
 #lister les recettes par ingredient
-#
+
+#lister les recettes par utilisateur
