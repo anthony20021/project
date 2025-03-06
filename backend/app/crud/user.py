@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas import UserCreate
 from sqlalchemy.exc import IntegrityError
+import os
 
 
 def get_user(db: Session, user_id: int):
@@ -54,6 +55,7 @@ def create_user(db: Session, user: UserCreate):
     return "Utilisateur créé avec succès."
 
 def login(db: Session, email: str, password: str):
+    SECRET_KEY = os.getenv("SECRET_KEY", "secret_key")
     try:
         user = db.query(User).filter(User.email == email).first()
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
