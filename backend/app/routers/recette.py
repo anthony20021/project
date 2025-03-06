@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
-from app.database import get_db
 from app.controllers.recette import create_recette, get_recette_by_id
 from app.database import SessionLocal
 
@@ -15,7 +14,7 @@ def get_db():
         db.close()
 
 
-@router.get("recette/{recette_id}")
+@router.get("/recette/{recette_id}")
 def get_recette(recette_id: int, db: Session = Depends(get_db)):
     return get_recette_by_id(db, recette_id)
 
