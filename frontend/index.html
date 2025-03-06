@@ -34,6 +34,7 @@
     }
 </style>
 <script>
+    const user_id = parseInt(sessionStorage.getItem('user_id'))
     const token = sessionStorage.getItem('token');
     if (token) {
         document.querySelector('a[data-link="register"]').style.display = 'none';

@@ -72,3 +72,6 @@ class Recette_ingredient(BaseModel):
 
 class Recette_ingredientCreate(Recette_ingredient):
     pass
+
+class IngredientBase(BaseModel):
+    name : str
