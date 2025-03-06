@@ -68,7 +68,7 @@ class CommentaireCreate(CommentaireBase):
 class Recette_ingredient(BaseModel):
     recette_id: int
     ingredient_id: int
-    quantity: int
+    quantity: str
 
 class Recette_ingredientCreate(Recette_ingredient):
     pass
