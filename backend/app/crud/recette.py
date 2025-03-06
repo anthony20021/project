@@ -2,9 +2,7 @@ from app.models.recette import Recette
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 from app.schemas import RecetteCreate
-
-
-
+from app.models.recette_ingredient import Recette_ingredient
 
 def read_recette(db: Session, recette_id: int):
     try:
@@ -12,14 +10,14 @@ def read_recette(db: Session, recette_id: int):
             db.query(Recette)
             .filter(Recette.id == recette_id)
             .options(
-                joinedload(Recette.recettes_ingredients) 
+                joinedload(Recette.recettes_ingredients)  # Charger la relation recettes_ingredients
+                .joinedload(Recette_ingredient.ingredient)  # Charger la relation ingredient dans recettes_ingredients
             )
             .first()
         )
     except Exception as e:
-        print(f"Une erreur s'est produite : {e}")
+        print(f"Une erreur s'est produite lors de la récupération de la recette : {e}")
         return None
-
 def create_recette(db: Session, recette: RecetteCreate, user_id):
     db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type, user_id=user_id)
     try:
