@@ -1,6 +1,6 @@
 from sqlite3 import IntegrityError
 from app.models.favorie import Favorie
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session,joinedload
 from app.schemas import FavorieCreate
 
 
@@ -47,6 +47,28 @@ def get_favories_by_user(db: Session, user_id):
         print(f"Une erreur s'est produite : {e}")
         return {
             'statut' : 'ko',
+            "message": "Une erreur s'est produite",
+            "data": []
+        }
+    
+def get_recette_by_user(db: Session, user_id):
+    try:
+        favoris = db.query(Favorie)\
+                   .options(joinedload(Favorie.recette))\
+                   .filter(Favorie.user_id == user_id)\
+                   .all()
+        
+        recettes = [favori.recette for favori in favoris if favori.recette]
+
+        return {
+            'data': recettes,
+            'statut': 'ok',
+            "message": "Recettes favorites récupérées avec succès",
+        }
+    except Exception as e:
+        print(f"Une erreur s'est produite : {e}")
+        return {
+            'statut': 'ko',
             "message": "Une erreur s'est produite",
             "data": []
         }

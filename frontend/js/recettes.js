@@ -190,7 +190,7 @@ export function init() {
                     <h3>Description</h3>
                     <p>${recette.description}</p>
                     <h3>Instructions</h3>
-                    <div class="instructions">${recette.instructions}</div>
+                    <pre class="instructions">${recette.instructions}</pre>
                     <h3>Ingrédients</h3>
                     <ul class="ingredients">
                         ${generateIngredientsList(recette.recettes_ingredients)}

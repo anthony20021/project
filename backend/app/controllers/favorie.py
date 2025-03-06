@@ -14,3 +14,6 @@ def delete_favorie(db: Session, favorie: FavorieCreate, user_id):
 
 def get_favorie(db: Session, user_id):
     return crud.get_favories_by_user(db, user_id=user_id)
+
+def get_recette(db: Session, user_id):
+    return crud.get_recette_by_user(db, user_id=user_id)

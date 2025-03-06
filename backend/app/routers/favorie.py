@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
-from app.controllers.favorie import create_favorie, delete_favorie, get_favorie
+from app.controllers.favorie import create_favorie, delete_favorie, get_recette, get_favorie
 from app.database import SessionLocal
 from app.Middleware.middleware import check_token
 
@@ -39,3 +39,10 @@ def get_favorie_endpoint(
     user_id: int = Depends(check_token)
     ):
     return get_favorie(db, user_id)   
+
+@router.get("/favorie/recettes/")
+def get_favorie_recettes_endpoint(
+    db: Session = Depends(get_db),
+    user_id: int = Depends(check_token)
+    ):
+    return get_recette(db, user_id) 
