@@ -1,20 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recette</title>
 </head>
+
 <body>
     <button class="button" id="create" style="display: none;"></button>
+    <!-- Rechercher une recette par type -->
+    <div style="display: flex;">
+        <div class="form-container" style="width: 50%;">
+            <label for="type" class="">Type de recette:</label>
+            <select class="form-select" name="type" id="typeRecherche">
+                <option value="">Tous</option>
+                <option value="entrée">Entrée</option>
+                <option value="plat">Plat</option>
+                <option value="dessert">Dessert</option>
+                <option value="boisson">Boisson</option>
+                <option value="snack">Snack</option>
+                <option value="salade">Salade</option>
+                <option value="soupe">Soupe</option>
+                <option value="gâteau">Gâteau</option>
+                <option value="végétarien">Végétarien</option>
+                <option value="sans-gluten">Sans gluten</option>
+            </select>
+        </div>
+        <div class="form-container" style="width: 50%;">
+            <label for="time">Temps de préparation</label>
+            <input class="form-input" type="number" id="time" placeholder="Entrer un nombre (minutes)">
+        </div>
+    </div>
     <div id="recettes"></div>
     <div id="createRecette" style="display: none;">
         <div class="center">
             <h1>Créer une recette</h1>
             <div class="form-container">
-                <input class="form-input" type="text" placeholder="Titre" id="titre"> 
+                <input class="form-input" type="text" placeholder="Titre" id="titre">
                 <input class="form-input" type="text" placeholder="Description" id="desc">
-                <textarea class="form-textarea" id="Instruction" rows="6" placeholder="Entrez les instructions de la recette"></textarea>
+                <textarea class="form-textarea" id="Instruction" rows="6"
+                    placeholder="Entrez les instructions de la recette"></textarea>
                 <select class="form-select" name="type" id="type">
                     <option value="entrée">Entrée</option>
                     <option value="plat">Plat</option>
@@ -32,7 +58,8 @@
             </div>
         </div>
     </div>
-    
+
     <div id="recetteDetails" style="display: none;"></div>
 </body>
+
 </html>

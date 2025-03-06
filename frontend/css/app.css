@@ -1,4 +1,5 @@
-html, body{
+html,
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100vh;
     width: 100vw;
@@ -13,7 +14,7 @@ body {
 
 
 nav {
-    background-color: #333; 
+    background-color: #333;
     padding: 10px 20px;
     text-align: center;
     display: flex;
@@ -24,40 +25,40 @@ nav {
 
 nav a {
     color: #fff;
-    text-decoration: none; 
-    margin: 0 15px; 
+    text-decoration: none;
+    margin: 0 15px;
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 18px;
-    transition: background-color 0.3s ease, color 0.3s ease; 
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
 nav a:hover {
-    background-color: #ff6f61; 
+    background-color: #ff6f61;
     color: #fff;
 }
 
 
 nav a[data-link="home"]:hover {
-    background-color: #66cc66; 
+    background-color: #66cc66;
 }
 
 nav a[data-link="register"]:hover {
-    background-color: #4d90fe; 
+    background-color: #4d90fe;
 }
 
 nav a[data-link="login"]:hover {
-    background-color: #ff9900; 
+    background-color: #ff9900;
 }
 
 nav a[data-link="recettes"]:hover {
-    background-color: #ff5757; 
+    background-color: #ff5757;
 }
 
 nav a.active {
     background-color: #ff6f61;
-    color: white; 
+    color: white;
 }
 
 @media (max-width: 768px) {
@@ -68,8 +69,8 @@ nav a.active {
     }
 
     nav a {
-        margin: 10px 0; 
-        width: 100%; 
+        margin: 10px 0;
+        width: 100%;
         text-align: left;
         padding: 12px 15px;
     }
@@ -77,11 +78,11 @@ nav a.active {
 
 @media (max-width: 480px) {
     nav a {
-        font-size: 16px; 
+        font-size: 16px;
     }
 }
 
-.center{
+.center {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,8 +111,7 @@ nav a.active {
 
 .form-input {
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 15px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -119,11 +119,45 @@ nav a.active {
     color: #333;
     background-color: #fff;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-input:focus {
-    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    border-color: #4CAF50;
     outline: none;
+}
+
+/* Adaptation spécifique pour les inputs de type number */
+.form-input[type="number"] {
+    width: 100%;
+    /* Largeur réduite pour les nombres */
+    padding-right: 30px;
+    /* Espace pour les flèches */
+}
+
+/* Style des flèches pour WebKit (Chrome, Safari, Opera) */
+.form-input[type="number"]::-webkit-inner-spin-button,
+.form-input[type="number"]::-webkit-outer-spin-button {
+    height: 30px;
+    width: 20px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.form-input[type="number"]::-webkit-inner-spin-button:hover,
+.form-input[type="number"]::-webkit-outer-spin-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour Firefox */
+.form-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.form-input[type="number"]:hover,
+.form-input[type="number"]:focus {
+    -moz-appearance: number-input;
 }
 
 .form-button {
@@ -139,14 +173,16 @@ nav a.active {
 }
 
 .form-button:hover {
-    background-color: #45a049;  /* Légère modification de la couleur au survol */
+    background-color: #45a049;
+    /* Légère modification de la couleur au survol */
 }
 
 .form-button:active {
-    background-color: #3e8e41;  /* Modification de la couleur au clic */
+    background-color: #3e8e41;
+    /* Modification de la couleur au clic */
 }
 
-.button{
+.button {
     width: 100%;
     padding: 12px;
     background-color: #4CAF50;
@@ -186,7 +222,8 @@ nav a.active {
 }
 
 .form-select:focus {
-    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    border-color: #4CAF50;
+    /* Bordure verte lorsque le champ est sélectionné */
     outline: none;
 }
 
@@ -202,50 +239,68 @@ nav a.active {
     color: #333;
     background-color: #fff;
     transition: border-color 0.3s ease;
-    resize: vertical;  /* Permet la redimension des textarea */
+    resize: vertical;
+    /* Permet la redimension des textarea */
 }
 
 .form-textarea:focus {
-    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    border-color: #4CAF50;
+    /* Bordure verte lorsque le champ est sélectionné */
     outline: none;
 }
 
 .recette {
-    margin-bottom: 20px;  /* Espace entre les recettes */
-    padding: 20px;        /* Espace interne de chaque recette */
-    border: 1px solid #ddd; /* Bordure légère autour de chaque recette */
-    border-radius: 10px;  /* Bords arrondis */
-    background-color: #fff; /* Fond blanc pour chaque recette */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet de profondeur */
-    transition: transform 0.3s ease; /* Transition lors du survol */
+    margin-bottom: 20px;
+    /* Espace entre les recettes */
+    padding: 20px;
+    /* Espace interne de chaque recette */
+    border: 1px solid #ddd;
+    /* Bordure légère autour de chaque recette */
+    border-radius: 10px;
+    /* Bords arrondis */
+    background-color: #fff;
+    /* Fond blanc pour chaque recette */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Ombre légère pour un effet de profondeur */
+    transition: transform 0.3s ease;
+    /* Transition lors du survol */
     cursor: pointer;
 }
 
 /* Style du titre */
 .recette h3 {
-    font-size: 1.5em; /* Taille du titre */
-    font-weight: bold; /* Met le titre en gras */
-    color: #333;       /* Couleur du titre */
-    margin: 0 0 10px 0; /* Espace sous le titre */
+    font-size: 1.5em;
+    /* Taille du titre */
+    font-weight: bold;
+    /* Met le titre en gras */
+    color: #333;
+    /* Couleur du titre */
+    margin: 0 0 10px 0;
+    /* Espace sous le titre */
 }
 
 /* Style des paragraphes */
 .recette p {
-    font-size: 1em;  /* Taille de la police */
-    margin: 5px 0;   /* Espace entre les paragraphes */
-    color: #555;     /* Couleur du texte */
-    line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
+    font-size: 1em;
+    /* Taille de la police */
+    margin: 5px 0;
+    /* Espace entre les paragraphes */
+    color: #555;
+    /* Couleur du texte */
+    line-height: 1.5;
+    /* Hauteur de ligne pour une meilleure lisibilité */
 }
 
 /* Mise en valeur des étiquettes fortes (strong) */
 .recette strong {
     font-weight: bold;
-    color: #007bff; /* Couleur bleue pour les étiquettes fortes */
+    color: #007bff;
+    /* Couleur bleue pour les étiquettes fortes */
 }
 
 /* Effet au survol d'une recette */
 .recette:hover {
-    transform: translateY(-5px); 
+    transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -258,7 +313,8 @@ nav a.active {
     margin-top: 20px;
     font-family: Arial, sans-serif;
     color: #333;
-    display: none; /* Par défaut, caché jusqu'à ce qu'on le rende visible */
+    display: none;
+    /* Par défaut, caché jusqu'à ce qu'on le rende visible */
 }
 
 #recetteDetails h3 {
@@ -296,4 +352,3 @@ nav a.active {
 #recetteDetails button:hover {
     background-color: #ff5733;
 }
-

@@ -17,7 +17,7 @@ INSERT INTO public."Ingredients"(name)
 ('Maïs'), ('Pois'), ('Pois chiche'), ('Poivron rouge'), ('Poivron vert'), ('Poivron jaune'), ('Potiron'), ('Rutabaga'), ('Soja'), ('Topinambour'),
 ('Truffe'), ('Yam'), ('Zucchini'), ('Cresson'), ('Céleri-rave'), ('Chou-rave'), ('Chou chinois'), ('Chou kale'), ('Chou pak choï'), ('Chou romanesco'),
 ('Chou rouge'), ('Chou blanc'), ('Chou vert'), ('Chou pointu'), ('Chou palmier'), ('Chou de Milan'), ('Chou de Savoie'), ('Chou de Toscane'), ('Chou de Pékin'),('Abricot'), ('Ananas'), ('Banane'), ('Cerise'), ('Citron'), ('Clémentine'), ('Fraise'), ('Framboise'), ('Grenade'), ('Kiwi'),
-('Mandarine'), ('Mangue'), ('Melon'), ('Mûre'), ('Myrtille'), ('Nectarine'), ('Orange'), ('Pamplemousse'), ('Papaye'), ('Pastèque'),
+('Mandarine'), ('Mangue'), ('Melon'), ('Mûre'), ('Myrtille'), ('Nectarine'), ('Orange'), ('Pamplemousse'), ('Papaye'), ('Pastèque'),('patate'),
 ('Pêche'), ('Poire'), ('Pomme'), ('Prune'), ('Raisin'), ('Abricot sec'), ('Amande'), ('Cacahuète'), ('Châtaigne'), ('Datte'),
 ('Figue'), ('Noisette'), ('Noix'), ('Pistache'), ('Pruneau'), ('Raisin sec'), ('Avocat'), ('Cassis'), ('Coing'), ('Goyave'),
 ('Kaki'), ('Litchi'), ('Mirabelle'), ('Nashi'), ('Olive'), ('Pamplemousse rose'), ('Passion'), ('Pêche de vigne'), ('Pomme Granny Smith'), ('Pomme Golden'),
