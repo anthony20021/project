@@ -50,6 +50,7 @@
 
     const logout = () => {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user_id');
         location.reload(true);
     }
 </script>

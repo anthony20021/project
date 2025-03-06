@@ -90,7 +90,7 @@ export function init() {
                 throw new Error("Erreur lors de la récupération des détails de la recette");
             }
             const recette = result.data;
-
+    
             // Construction du contenu des détails de la recette
             let detailsHTML = `
                 <h3>${recette.titre}</h3>
@@ -109,29 +109,40 @@ export function init() {
                 detailsHTML += `<li>Aucun ingrédient associé.</li>`;
             }
             detailsHTML += `</ul>`;
-
+    
             if (user_id === recette.user_id) {
                 // Ajouter le formulaire d'ajout d'ingrédient
                 detailsHTML += `
-                <div id="addIngredientForm" class="form-container">  <!-- Classe pour le formulaire -->
+                <div id="addIngredientForm" class="form-container">
                     <h4>Ajouter un ingrédient</h4>
-                    <select id="ingredientSelect" class="form-select"></select> <!-- Classe pour le select -->
-                    <input type="text" id="ingredientQuantity" class="form-input" placeholder="Quantité (exemple : 60g)" /> <!-- Classe pour l'input -->
-                    <button id="addIngredientButton" class="form-button">Ajouter l'ingrédient</button> <!-- Classe pour le bouton -->
+                    <select id="ingredientSelect" class="form-select"></select>
+                    <input type="number" id="ingredientQuantity" class="form-input" placeholder="Quantité" />
+                    <select id="ingredientUnit" class="form-select">
+                        <option value="Cuillère à soupe">Cuillère à soupe</option>
+                        <option value="Cuillère à café">Cuillère à café</option>
+                        <option value="ml">ml</option>
+                        <option value="l">l</option>
+                        <option value="g">g</option>
+                        <option value="kg">kg</option>
+                        <option value="pièce">pièce</option>
+                        <!-- Ajoute d'autres unités ici si besoin -->
+                    </select>
+                    <button id="addIngredientButton" class="form-button">Ajouter l'ingrédient</button>
                 </div>
                 `;
             }
             detailsHTML += `<button id="backButton">Retour</button>`;
-
+    
             recetteDetailsDiv.innerHTML = detailsHTML;
             recetteDetailsDiv.style.display = 'block';
             recettesDiv.style.display = 'none';
-
+    
             // Bouton Retour
             document.getElementById('backButton').addEventListener('click', () => {
                 recetteDetailsDiv.style.display = 'none';
                 recettesDiv.style.display = 'block';
             });
+    
             // Si l'utilisateur peut ajouter un ingrédient, charger la liste des ingrédients et ajouter l'événement
             if (user_id === recette.user_id) {
                 const ingredientSelect = document.getElementById('ingredientSelect');
@@ -146,23 +157,30 @@ export function init() {
                     option.textContent = ingredient.name;
                     ingredientSelect.appendChild(option);
                 });
-
+    
+                // Ajouter un événement pour le bouton Ajouter l'ingrédient
                 document.getElementById('addIngredientButton').addEventListener('click', async () => {
                     const selectedIngredientId = document.getElementById('ingredientSelect').value;
                     const quantity = document.getElementById('ingredientQuantity').value;
-                    if (!selectedIngredientId || !quantity) {
+                    const unit = document.getElementById('ingredientUnit').value;
+    
+                    if (!selectedIngredientId || !quantity || !unit) {
                         Swal.fire({
                             title: "Erreur",
-                            text: "Veuillez sélectionner un ingrédient et entrer une quantité",
+                            text: "Veuillez sélectionner un ingrédient, entrer une quantité et choisir une unité",
                             icon: "error"
                         });
                         return;
                     }
+    
+                    // Concaténation de la quantité et de l'unité
+                    const formattedQuantity = `${quantity} ${unit}`;
+    
                     try {
                         const postData = {
                             recette_id: recette.id,
                             ingredient_id: parseInt(selectedIngredientId),
-                            quantity: quantity
+                            quantity: formattedQuantity
                         };
                         const addResult = await post('recettes/ingredients', postData);
                         if (addResult.status !== 200) {
