@@ -1,6 +1,7 @@
 import bcrypt
 import jwt
 import re
+from fastapi.responses import JSONResponse
 from fastapi import HTTPException, status
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -15,17 +16,30 @@ def get_user(db: Session, user_id: int):
         return db.query(User).filter(User.id == user_id).first()
     except Exception as e:
         print(f"Une erreur s'est produite : {e}")
+        raise HTTPException(                 
+                status_code=status.HTTP_200_UNAUTHORIZED,
+                status="chaos",                   
+                detail='Une erreur s\'est produite' 
+            )
         
 def create_user(db: Session, user: UserCreate):
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     
     if not user.password or not user.first_name or not user.last_name or not user.email:
         print("Password, first name, last name and email cannot be null.")
-        return "Password, first name, last name and email cannot be null."
+        raise HTTPException(                 
+                status_code=status.HTTP_200_UNAUTHORIZED,
+                status="chaos",                 
+                detail='Password, first name, last name and email cannot be null.' 
+            )
 
     if not re.match(email_regex, user.email):
         print("Invalid email format.")
-        return "Invalid email format."
+        raise HTTPException(                 
+                status_code=status.HTTP_200_UNAUTHORIZED,
+                status="chaos",                   
+                detail='Invalid email format' 
+            )
     
     db_user = None
 
@@ -52,7 +66,7 @@ def create_user(db: Session, user: UserCreate):
     finally:
         if db_user:
             db.refresh(db_user)  
-    return "Utilisateur créé avec succès."
+    return JSONResponse(status_code=200, content={"status": "success"})
 
 def login(db: Session, email: str, password: str):
     SECRET_KEY = os.getenv("SECRET_KEY", "secret_key")
