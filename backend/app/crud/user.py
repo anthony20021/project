@@ -63,11 +63,14 @@ def login(db: Session, email: str, password: str):
                 'exp': datetime.utcnow() + timedelta(hours=24)  # Le jeton expire après 24 heures
             }, SECRET_KEY, algorithm='HS256')
             return {'token': token}
-        else:             # Lever une exception HTTP 401 Unauthorized en cas de mauvais identifiants
+        else:             
             raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,                 
                 detail='Invalid credentials' 
             )
     except Exception as e:
         print(f"Une erreur s'est produite : {e}")
-        return {'error': 'An error occurred'}
+        raise HTTPException(                 
+            status_code=status.HTTP_500_UNAUTHORIZED,                 
+            detail="Une erreur c'est produite" 
+        )

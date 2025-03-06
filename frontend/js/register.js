@@ -23,7 +23,6 @@ export default function initRegister() {
             };
 
             const result = await network.post('users', data);
-            console.log(result)
             if (result.status === 200) {
                 Swal.fire({ title: "Succès", text: "Vous êtes inscrit", icon: "success" });
             } else {
