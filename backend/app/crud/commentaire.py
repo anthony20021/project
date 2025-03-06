@@ -60,6 +60,11 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
             db_commentaire.content = commentaire.content
         if commentaire.note is not None:
             db_commentaire.note = commentaire.note
+        if (db_commentaire.user_id != commentaire.user_id or db_commentaire.recipes_id != commentaire.recipes_id):
+            raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='user_id or recipes_id n\'est pas correct'
+        )
 
         db.commit()
         db.refresh(db_commentaire)
