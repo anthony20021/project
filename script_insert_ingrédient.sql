@@ -1,6 +1,6 @@
 INSERT INTO public."Ingredients"(name)
 	VALUES 
-('Sel'), ('Poivre'), ('Paprika'), ('Cumin'), ('Curcuma'), ('Gingembre'), ('Cannelle'), ('Clou de girofle'), ('Muscade'), ('Safran'),
+('Jambon'),('Fromage'),('Oeuf'),('Sel'), ('Poivre'), ('Paprika'), ('Cumin'), ('Curcuma'), ('Gingembre'), ('Cannelle'), ('Clou de girofle'), ('Muscade'), ('Safran'),
 ('Piment'), ('Vanille'), ('Anis'), ('Badiane'), ('Cardamome'), ('Coriandre'), ('Fenouil'), ('Laurier'), ('Menthe'), ('Origan'),
 ('Persil'), ('Romarin'), ('Sauge'), ('Thym'), ('Basilic'), ('Ciboulette'), ('Estragon'), ('Aneth'), ('Cerfeuil'), ('Marjolaine'),
 ('Sarriette'), ('Livèche'), ('Hysope'), ('Mélisse'), ('Verveine'), ('Estragon de Russie'),('Saumon'), ('Thon'), ('Truite'), ('Crevette'), ('Crabe'), ('Homard'), ('Moule'), ('Huître'), ('Calamar'), ('Seiche'),
