@@ -1,0 +1,163 @@
+html, body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+nav {
+    background-color: #333; 
+    padding: 10px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none; 
+    margin: 0 15px; 
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+
+nav a:hover {
+    background-color: #ff6f61; 
+    color: #fff;
+}
+
+
+nav a[data-link="home"]:hover {
+    background-color: #66cc66; 
+}
+
+nav a[data-link="register"]:hover {
+    background-color: #4d90fe; 
+}
+
+nav a[data-link="login"]:hover {
+    background-color: #ff9900; 
+}
+
+nav a[data-link="recettes"]:hover {
+    background-color: #ff5757; 
+}
+
+nav a.active {
+    background-color: #ff6f61;
+    color: white; 
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    nav a {
+        margin: 10px 0; 
+        width: 100%; 
+        text-align: left;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav a {
+        font-size: 16px; 
+    }
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.form-container label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    outline: none;
+}
+
+.form-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #45a049;  /* Légère modification de la couleur au survol */
+}
+
+.form-button:active {
+    background-color: #3e8e41;  /* Modification de la couleur au clic */
+}
+
+@media (max-width: 500px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    .form-input {
+        font-size: 16px;
+    }
+
+    .form-button {
+        font-size: 18px;
+    }
+}
+
+

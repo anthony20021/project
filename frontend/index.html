@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
+    <title>Encouniamane</title>
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <h1>Hello</h1>
+    <nav>
+        <a href="#" data-link="home"><img id="logo" src="ressources/logo.png"></a>
+        <a href="#" data-link="recettes">Recettes</a>
+        <a href="#" data-link="register">Inscription</a>
+        <a href="#" data-link="login">Connexion</a>
+    </nav>
+
+    <div id="content">
+    </div>
+    <script src="js/routeur.js" type="module"></script>
 </body>
 </html>
+
+<style>
+    #content{
+        height: 100%;
+        width: 100%;
+    }
+    #logo{
+        height: 50px;
+        width: 50px;
+    }
+</style>
