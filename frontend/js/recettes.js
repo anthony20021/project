@@ -180,23 +180,21 @@ export function init() {
     function generateDetailHTML(recette) {
         return /*html*/`
             <div class="recette-detail">
-                <div class="center">
-                    <button id="backButton" class="button">Retour</button>
-                    <h2>${recette.titre}</h2>
-                    <div class="meta">
-                        <span>Type: ${recette.type}</span>
-                        <span>Temps: ${recette.temps_preparation} min</span>
-                    </div>
-                    <h3>Description</h3>
-                    <p>${recette.description}</p>
-                    <h3>Instructions</h3>
-                    <pre class="instructions">${recette.instructions}</pre>
-                    <h3>Ingrédients</h3>
-                    <ul class="ingredients">
-                        ${generateIngredientsList(recette.recettes_ingredients)}
-                    </ul>
-                    ${generateDetailActions(recette)}
+                <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
+                <h2>${recette.titre}</h2>
+                <div class="meta">
+                    <span>Type: ${recette.type}</span>
+                    <span>Temps: ${recette.temps_preparation} min</span>
                 </div>
+                <h3>Description</h3>
+                <p>${recette.description}</p>
+                <h3>Instructions</h3>
+                <pre class="instructions">${recette.instructions}</pre>
+                <h3>Ingrédients</h3>
+                <ul class="ingredients">
+                    ${generateIngredientsList(recette.recettes_ingredients)}
+                </ul>
+                ${generateDetailActions(recette)}
             </div>
         `;
     }
