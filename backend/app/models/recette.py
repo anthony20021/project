@@ -7,6 +7,7 @@ class Recette(Base):
     __tablename__ = "Recettes"
  
     id = Column(Integer, primary_key=True, autoincrement=True)
+    temps_preparation = Column(Integer)
     titre = Column(String, nullable=True)
     description = Column(String, nullable=True)
     instructions = Column(String, nullable=True)
