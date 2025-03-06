@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.crud import user as crud
-from app.schemas import UserCreate
+from app.crud import recette as crud
+from app.schemas import RecetteCreate
 from app.models.recette import Recette
 
 
@@ -12,5 +12,5 @@ def get_recette_by_id(db: Session, recette_id: int):
     return db_recette
 
 
-def create_recette(db: Session, recette: Recette):
+def create_recette(db: Session, recette: RecetteCreate):
     return crud.create_recette(db, recette)

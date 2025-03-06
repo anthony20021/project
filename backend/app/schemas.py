@@ -30,10 +30,13 @@ class User(UserBase):
 
 
 class RecetteBase(BaseModel):
-    title: str
+    titre: str
     description: str
-    ingredients: str
-    preparation: str
+    instructions: str
+    type: str
+    temps_preparation: int
+    user_id: int
+
 
 class RecetteCreate(RecetteBase):
     pass
@@ -45,8 +48,9 @@ class Recette(RecetteBase):
         orm_mode = True
         schema_extra = {
             "example": {
-                "title": "Tarte aux pommes",
+                "titre": "Tarte aux pommes",
                 "description": "Tarte aux pommes, une recette classique de la cuisine fran aise.",
-                "preparation": "Mélanger, mettre dans un moule, cuire, servir chaud."
+                "instructions": "Mélanger, mettre dans un moule, cuire, servir chaud.",
+                "temps_preparation": 30
             }
         }
