@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import recette
 from app.routers import commentaire
 from app.routers import recette_ingredient
+from app.routers import ingredient
 
 app = FastAPI()
 
@@ -23,3 +24,4 @@ app.include_router(user.router, prefix="/api", tags=["users"])
 app.include_router(recette.router, prefix="/api", tags=["recettes"])
 app.include_router(commentaire.router, prefix="/api", tags=["commentaires"])
 app.include_router(recette_ingredient.router, prefix="/api", tags=["recettes_ingredients"])
+app.include_router(ingredient.router, prefix="/api", tags=["ingredients"])
