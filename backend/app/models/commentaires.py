@@ -7,6 +7,7 @@ class Commentaire(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     content = Column(Text, nullable=False)
+    note = Column(Integer, nullable=False)
     created_at = Column(Date, nullable=False)
     user_id = Column(Integer, ForeignKey('Users.id'), nullable=False)
     recipes_id = Column(Integer, ForeignKey('Recettes.id'), nullable=False)
