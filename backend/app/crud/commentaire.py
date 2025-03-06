@@ -7,9 +7,9 @@ from app.schemas import CommentaireCreate
 from sqlalchemy.exc import IntegrityError
 
 
-def get_commentaire(db: Session, recette_id: int):
+def get_commentaire(db: Session, recette_id: int, user_id: int):
     try:
-        return db.query(Commentaire).filter(Commentaire.recipes_id == recette_id).all()
+        return db.query(Commentaire).filter(Commentaire.recipes_id == recette_id and Commentaire.user_id == user_id).all()
     except Exception as e:
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
