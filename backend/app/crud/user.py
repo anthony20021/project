@@ -66,7 +66,7 @@ def login(db: Session, email: str, password: str):
                 'user_last_name': user.last_name,
                 'exp': datetime.utcnow() + timedelta(hours=24)  # Le jeton expire après 24 heures
             }, SECRET_KEY, algorithm='HS256')
-            return {'token': token}
+            return {'token': token, 'user_id': user.id}
         else:             
             raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,                 

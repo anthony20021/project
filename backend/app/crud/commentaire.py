@@ -49,3 +49,53 @@ def create_commentaire(db: Session, commentaire: CommentaireCreate):
     else:
         print("Commentaire créé avec succès.") 
     return "Commentaire créé avec succès."
+
+def modify_commentaire(db: Session, commentaire_id: int, commentaire: CommentaireCreate):
+    try:
+        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id).first()
+        if db_commentaire is None:
+            raise HTTPException(status_code=404, detail="Commentaire not found")
+
+        if commentaire.content is not None:
+            db_commentaire.content = commentaire.content
+        if commentaire.note is not None:
+            db_commentaire.note = commentaire.note
+
+        db.commit()
+        db.refresh(db_commentaire)
+    except IntegrityError as e:
+        db.rollback()
+        print(f"Erreur d'intégrité : {e.orig}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Erreur d\'intégrité'
+        )
+    except Exception as e:
+        db.rollback()  # Annuler en cas d'autres erreurs
+        print(f"Une erreur s'est produite : {e}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Une erreur s\'est produite'
+        )
+    else:
+        print("Commentaire modifié avec succès.")
+    return db_commentaire
+
+def delete_commentaire(db: Session, commentaire_id: int):
+    try:
+        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id).first()
+        if db_commentaire is None:
+                raise HTTPException(status_code=404, detail="Commentaire not found")
+
+        db.delete(db_commentaire)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"Une erreur s'est produite : {e}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Une erreur s\'est produite'
+        )
+    else:
+        print("Commentaire supprimé avec succès.")
+    return {"detail": "Commentaire supprimé avec succès."}

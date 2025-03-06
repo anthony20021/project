@@ -48,15 +48,6 @@ def list_recettes(db: Session):
         return []
 
 
-#lister les recettes par type
-def list_recettes_by_type(db: Session, recette_type: str):
-    """Récupère toutes les recettes d'un type donné."""
-    try:
-        return db.query(Recette).filter(Recette.type == recette_type).all()
-    except Exception as e:
-        print(f"Une erreur s'est produite : {e}")
-        return []
-
 
 def delete_recette(db: Session, recette_id: int):
     try:

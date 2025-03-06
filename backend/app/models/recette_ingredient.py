@@ -7,7 +7,7 @@ class Recette_ingredient(Base):
     
     recette_id = Column(Integer, ForeignKey('Recettes.id'), primary_key=True)
     ingredient_id = Column(Integer, ForeignKey('Ingredients.id'), primary_key=True)
-    quantity = Column(Integer, nullable=False)
+    quantity = Column(String, nullable=False)
     
     recette = relationship("Recette", back_populates="recettes_ingredients")
     ingredient = relationship("Ingredient", back_populates="recette")

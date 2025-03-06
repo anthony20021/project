@@ -22,6 +22,7 @@ export function init() {
             console.log(result);
             if (result.status === 200) {
                 sessionStorage.setItem('token', result.data.token);
+                sessionStorage.setItem('user_id', result.data.user_id)
                 window.location.href = '#recettes';
                 location.reload(true);
             } else {
