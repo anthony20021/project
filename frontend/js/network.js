@@ -4,7 +4,8 @@ async function request(endpoint, options = {}) {
     const url = `${API_BASE_URL}/${endpoint}`;
     
     const defaultHeaders = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     };
     
     const config = {

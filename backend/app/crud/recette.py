@@ -12,26 +12,9 @@ def read_recette(db: Session, recette_id: int):
         print(f"Une erreur s'est produite : {e}")
 
 
-def read_recette_with_ingredients(db: Session, recette_id: int):
+def create_recette(db: Session, recette: RecetteCreate, user_id):
+    db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type, user_id=user_id)
     try:
-        return (
-            db.query(Recette)
-            .filter(Recette.id == recette_id)
-            .options(
-                joinedload(Recette.recettes_ingredients)  # Charge la relation recette_ingredient
-                .joinedload("ingredient")  # Charge les ingrédients liés
-            )
-            .first()
-        )
-    except Exception as e:
-        print(f"Une erreur s'est produite : {e}")
-        return None
-
-
-def create_recette(db: Session, recette: RecetteCreate):
-    db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type)
-    try:
-        db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type)
         db.add(db_recette)
         db.commit()
         print("Recette crée avec succès.")

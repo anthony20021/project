@@ -11,14 +11,8 @@ def get_recette_by_id(db: Session, recette_id: int):
     return db_recette
 
 
-def get_recette_with_ingredients(db: Session, recette_id: int):
-    db_recette = crud.read_recette_with_ingredients(db, recette_id)
-    if db_recette is None:
-        raise HTTPException(status_code=404, detail="Recette not found")
-    return db_recette
-
-def create_recette(db: Session, recette: RecetteCreate):
-    return crud.create_recette(db, recette)
+def create_recette(db: Session, recette: RecetteCreate, user_id: int):
+    return crud.create_recette(db, recette, user_id)
 
 
 def list_recettes(db: Session):
