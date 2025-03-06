@@ -59,9 +59,9 @@ export function init() {
         };
 
         try {
-            const response = await post('recettes', recetteData);
+            const result = await post('recettes', recetteData);
 
-            if (response.status !== 200) {
+            if (result.status !== 200) {
                 throw new Error("Erreur lors de la création de la recette");
             }
 
@@ -71,7 +71,6 @@ export function init() {
                 icon: "success"
             });
 
-            console.log("Recette créée :", await response.json());
 
             // Réinitialisation du formulaire
             document.getElementById('titre').value = "";

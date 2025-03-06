@@ -35,7 +35,6 @@ class RecetteBase(BaseModel):
     instructions: str
     type: str
     temps_preparation: int
-    user_id: int
 
 
 class RecetteCreate(RecetteBase):
