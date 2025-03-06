@@ -11,8 +11,8 @@ def read_recette(db: Session, recette_id: int):
             db.query(Recette)
             .filter(Recette.id == recette_id)
             .options(
-                joinedload(Recette.recettes_ingredients)  # Charge la relation recette_ingredient
-                .joinedload("ingredient")  # Charge les ingrédients liés
+                joinedload(Recette.recettes_ingredients)  
+                .joinedload("ingredient")  
             )
             .first()
         )

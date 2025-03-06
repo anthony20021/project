@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
-from app.controllers.recette import create_recette, get_recette_by_id, get_recette_with_ingredients, list_recettes
+from app.controllers.recette import create_recette, get_recette_by_id, list_recettes
 from app.database import SessionLocal
 from app.Middleware.middleware import check_token
 
