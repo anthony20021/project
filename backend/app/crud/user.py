@@ -8,7 +8,6 @@ from app.models.user import User
 from app.schemas import UserCreate
 from sqlalchemy.exc import IntegrityError
 
-SECRET_KEY = "b9c65df28c1984823631f3c2911146c8a610d35f9ef90b9df578fc918eccb8d4"
 
 def get_user(db: Session, user_id: int):
     try:
@@ -60,6 +59,9 @@ def login(db: Session, email: str, password: str):
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
             token = jwt.encode({
                 'user_id': user.id,
+                'user_email': user.email,
+                'user_first_name': user.first_name,
+                'user_last_name': user.last_name,
                 'exp': datetime.utcnow() + timedelta(hours=24)  # Le jeton expire après 24 heures
             }, SECRET_KEY, algorithm='HS256')
             return {'token': token}
