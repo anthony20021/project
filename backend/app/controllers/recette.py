@@ -13,3 +13,7 @@ def get_recette_by_id(db: Session, recette_id: int):
 
 def create_recette(db: Session, recette: RecetteCreate):
     return crud.create_recette(db, recette)
+
+
+def list_recettes(db: Session):
+    return crud.list_recettes(db)
