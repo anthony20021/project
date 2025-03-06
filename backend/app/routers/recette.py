@@ -15,9 +15,9 @@ def get_db():
 
 
 @router.get("/recette/{recette_id}")
-def get_recette(recette_id: int, db: Session = Depends(get_db)):
+def get_recette_endpoint(recette_id: int, db: Session = Depends(get_db)):
     return get_recette_by_id(db, recette_id)
 
 @router.post("/recettes/")
-def create_recette(recette: schemas.RecetteCreate, db: Session = Depends(get_db)):
+def create_recette_endpoint(recette: schemas.RecetteCreate, db: Session = Depends(get_db)):
     return create_recette(db, recette)
