@@ -53,3 +53,11 @@ class Recette(RecetteBase):
                 "temps_preparation": 30
             }
         }
+
+class Recette_ingredient(BaseModel):
+    recette_id: int
+    ingredient_id: int
+    quantity: int
+
+class Recette_ingredientCreate(Recette_ingredient):
+    pass
