@@ -13,11 +13,15 @@ loginElement.addEventListener('click', async () => {
         const result = await network.post('login', data);
         console.log(result);
         if (result.status === 200) {
-            localStorage.setItem('token', result.data.token);
+            sessionStorage.setItem('token', result.data.token);
+            window.location.href = '#recettes';
+            location.reload(true);
+
         } else {
             Swal.fire({ title: "Erreur", text: "Connexion échouée", icon: "error" });
         }
     } catch (error) {
         console.error('Fetch error:', error);
+        Swal.fire({ title: "Erreur", text: "Connexion échouée", icon: "error" });
     }
 });
