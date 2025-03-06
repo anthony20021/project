@@ -14,7 +14,7 @@ def read_recette(db: Session, recette_id: int):
 
 def create_recette(db: Session, recette: RecetteCreate):
     try:
-        db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation)
+        db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type)
         db.add(db_recette)
         db.commit()
         print("Recette crée avec succès.")
@@ -28,3 +28,7 @@ def create_recette(db: Session, recette: RecetteCreate):
         if db_recette:
             db.refresh(db_recette)
     return db_recette
+
+#lister toutes les recettes
+#lister les recettes par ingredient
+#
