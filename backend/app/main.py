@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.routers import user
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import recette
 
 app = FastAPI()
 
@@ -16,3 +17,4 @@ def read_root():
     return {"message": "Hello, FastAPI!"}
 
 app.include_router(user.router, prefix="/api", tags=["users"])
+app.include_router(recette.router, prefix="/api", tags=["recettes"])

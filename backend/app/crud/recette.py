@@ -13,8 +13,8 @@ def read_recette(db: Session, recette_id: int):
 
 
 def create_recette(db: Session, recette: RecetteCreate):
+    db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation)
     try:
-        db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation)
         db.add(db_recette)
         db.commit()
         print("Recette crée avec succès.")
