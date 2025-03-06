@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app import schemas
 from app.controllers.commentaire import create_new_commentaire, get_commentaire_all, modify_comment, delete_comment
 from app.database import SessionLocal
+from app.Middleware.middleware import check_token
 
 router = APIRouter()
 
@@ -18,8 +19,8 @@ def create_commentaire(commentaire: schemas.CommentaireCreate, db: Session = Dep
     return create_new_commentaire(db, commentaire)  
 
 @router.get("/commentaires/{recette_id}")
-def get_commentaire(recette_id: int, db: Session = Depends(get_db)):
-    return get_commentaire_all(db, recette_id)
+def get_commentaire(recette_id: int, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return get_commentaire_all(db, recette_id, user_id)
 
 @router.put("/commentaire_modifie/{commentaire_id}")
 def modify_commentaire(commentaire_id: int, commentaire: schemas.CommentaireCreate, db: Session = Depends(get_db)):
