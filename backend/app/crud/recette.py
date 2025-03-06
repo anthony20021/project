@@ -28,7 +28,3 @@ def create_recette(db: Session, recette: RecetteCreate):
         if db_recette:
             db.refresh(db_recette)
     return db_recette
-
-#lister toutes les recettes
-#lister les recettes par ingredient
-#
