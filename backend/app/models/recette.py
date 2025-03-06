@@ -11,6 +11,7 @@ class Recette(Base):
     titre = Column(String, nullable=True)
     description = Column(String, nullable=True)
     instructions = Column(String, nullable=True)
+    type = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
     user_id = Column(Integer, ForeignKey('Users.id'), nullable=False)
  
