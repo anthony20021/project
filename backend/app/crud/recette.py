@@ -12,10 +12,9 @@ def read_recette(db: Session, recette_id: int):
         print(f"Une erreur s'est produite : {e}")
 
 
-def create_recette(db: Session, recette: RecetteCreate):
-    db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type)
+def create_recette(db: Session, recette: RecetteCreate, user_id):
+    db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type, user_id=user_id)
     try:
-        db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type)
         db.add(db_recette)
         db.commit()
         print("Recette crée avec succès.")

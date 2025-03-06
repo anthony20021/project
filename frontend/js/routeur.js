@@ -6,31 +6,39 @@ document.addEventListener("DOMContentLoaded", () => {
         register: "template/register.html",
     };
 
-    function loadPage(page) {
+    async function loadPage(page) {
         if (routes[page]) {
-            fetch(routes[page])
-                .then(response => response.text())
-                .then(content => {
-                    const contentDiv = document.getElementById("content");
-                    contentDiv.innerHTML = content;
-                    window.history.pushState({}, page, `#${page}`);
+            try {
+                const response = await fetch(routes[page]);
+                const content = await response.text();
 
-                    // Exécuter les scripts inline présents dans la page chargée
-                    executeScripts(contentDiv);
+                const contentDiv = document.getElementById("content");
+                contentDiv.innerHTML = content;
+                window.history.pushState({}, page, `#${page}`);
 
-                    // Essayer de charger dynamiquement un fichier JS associé à la page
-                    const scriptPath = `/js/${page}.js`; // Exemple : register -> /js/register.js
-                    import(scriptPath)
-                        .then(module => {
-                            if (module.default) {
-                                module.default(); // Exécute la fonction exportée par défaut
-                            }
-                        })
-                        .catch(error => {
-                            console.warn(`Aucun fichier JS trouvé pour ${page}, ou erreur d'import :`, error);
-                        });
-                })
-                .catch(error => console.error("Erreur lors du chargement de la page:", error));
+                // Exécuter les scripts inline présents dans la page chargée
+                executeScripts(contentDiv);
+
+                // Charger dynamiquement un fichier JS associé à la page en tant que module
+                const scriptPath = `/js/${page}.js`;
+                await loadScriptAsModule(scriptPath);
+            } catch (error) {
+                console.error("Erreur lors du chargement de la page:", error);
+            }
+        }
+    }
+
+    async function loadScriptAsModule(scriptPath) {
+        try {
+            // Import dynamique du module avec bypass cache
+            const module = await import(`${scriptPath}?${Date.now()}`);
+
+            // Vérifie si le module exporte une fonction init() et l'exécute
+            if (module.init) {
+                module.init();
+            }
+        } catch (error) {
+            console.warn(`Aucun module trouvé pour ${scriptPath}, ou erreur d'import :`, error);
         }
     }
 
