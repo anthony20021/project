@@ -146,6 +146,18 @@ nav a.active {
     background-color: #3e8e41;  /* Modification de la couleur au clic */
 }
 
+.button{
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 @media (max-width: 500px) {
     .form-container {
         padding: 15px;
@@ -158,6 +170,83 @@ nav a.active {
     .form-button {
         font-size: 18px;
     }
+}
+
+.form-select {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    outline: none;
+}
+
+/* Style pour les textarea */
+.form-textarea {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    resize: vertical;  /* Permet la redimension des textarea */
+}
+
+.form-textarea:focus {
+    border-color: #4CAF50;  /* Bordure verte lorsque le champ est sélectionné */
+    outline: none;
+}
+
+.recette {
+    margin-bottom: 20px;  /* Espace entre les recettes */
+    padding: 20px;        /* Espace interne de chaque recette */
+    border: 1px solid #ddd; /* Bordure légère autour de chaque recette */
+    border-radius: 10px;  /* Bords arrondis */
+    background-color: #fff; /* Fond blanc pour chaque recette */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet de profondeur */
+    transition: transform 0.3s ease; /* Transition lors du survol */
+    cursor: pointer;
+}
+
+/* Style du titre */
+.recette h3 {
+    font-size: 1.5em; /* Taille du titre */
+    font-weight: bold; /* Met le titre en gras */
+    color: #333;       /* Couleur du titre */
+    margin: 0 0 10px 0; /* Espace sous le titre */
+}
+
+/* Style des paragraphes */
+.recette p {
+    font-size: 1em;  /* Taille de la police */
+    margin: 5px 0;   /* Espace entre les paragraphes */
+    color: #555;     /* Couleur du texte */
+    line-height: 1.5; /* Hauteur de ligne pour une meilleure lisibilité */
+}
+
+/* Mise en valeur des étiquettes fortes (strong) */
+.recette strong {
+    font-weight: bold;
+    color: #007bff; /* Couleur bleue pour les étiquettes fortes */
+}
+
+/* Effet au survol d'une recette */
+.recette:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 

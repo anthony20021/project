@@ -36,7 +36,6 @@ class RecetteBase(BaseModel):
     instructions: str
     type: str
     temps_preparation: int
-    user_id: int
 
 
 class RecetteCreate(RecetteBase):
@@ -64,4 +63,12 @@ class CommentaireBase(BaseModel):
     recipes_id: int
  
 class CommentaireCreate(CommentaireBase):
+    pass
+
+class Recette_ingredient(BaseModel):
+    recette_id: int
+    ingredient_id: int
+    quantity: int
+
+class Recette_ingredientCreate(Recette_ingredient):
     pass
