@@ -1,69 +1,69 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Définir les routes et leurs fichiers HTML associés
     const routes = {
-        home: 'template/home.html',
-        recettes: 'template/recette.html',
-        login: 'template/login.html',
-        register: 'template/register.html'
+        home: "template/home.html",
+        recettes: "template/recette.html",
+        login: "template/login.html",
+        register: "template/register.html",
     };
 
-    // Fonction pour charger le contenu d'une page
     function loadPage(page) {
-        // Vérifier si la route existe
         if (routes[page]) {
-            fetch(routes[page]) // Récupérer le fichier HTML correspondant
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Erreur de chargement de la page.");
-                    }
-                    return response.text(); // Récupérer le texte HTML
-                })
+            fetch(routes[page])
+                .then(response => response.text())
                 .then(content => {
-                    // Injecter le contenu dans l'élément #content
-                    document.getElementById('content').innerHTML = content;
-
-                    // Ajouter la nouvelle route dans l'historique
+                    const contentDiv = document.getElementById("content");
+                    contentDiv.innerHTML = content;
                     window.history.pushState({}, page, `#${page}`);
 
-                    // Recharger les scripts JS associés après avoir injecté le HTML
-                    loadScript(page);
+                    // Exécuter les scripts inline présents dans la page chargée
+                    executeScripts(contentDiv);
+
+                    // Essayer de charger dynamiquement un fichier JS associé à la page
+                    const scriptPath = `/js/${page}.js`; // Exemple : register -> /js/register.js
+                    import(scriptPath)
+                        .then(module => {
+                            if (module.default) {
+                                module.default(); // Exécute la fonction exportée par défaut
+                            }
+                        })
+                        .catch(error => {
+                            console.warn(`Aucun fichier JS trouvé pour ${page}, ou erreur d'import :`, error);
+                        });
                 })
-                .catch(error => {
-                    console.error("Erreur lors du chargement de la page:", error);
-                });
-        } else {
-            console.log("Route non trouvée");
+                .catch(error => console.error("Erreur lors du chargement de la page:", error));
         }
     }
 
-    // Fonction pour charger dynamiquement un script JS
-    function loadScript(page) {
-        const scriptElement = document.createElement('script');
-        scriptElement.src = `../js/${page}.js`; // Assurer que le fichier JS est dans le bon dossier
-        scriptElement.onload = () => {
-        };
-        scriptElement.onerror = () => {
-            console.error(`Erreur de chargement du script ${page}.js`);
-        };
-        document.body.appendChild(scriptElement); // Ajouter le script au DOM
+    function executeScripts(element) {
+        const scripts = element.querySelectorAll("script");
+        scripts.forEach(oldScript => {
+            const newScript = document.createElement("script");
+            if (oldScript.src) {
+                newScript.src = oldScript.src;
+                newScript.defer = true;
+            } else {
+                newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+            oldScript.remove();
+        });
     }
 
     // Ajouter les événements de clic sur les liens
-    const links = document.querySelectorAll('a[data-link]');
-    links.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault(); // Empêcher le comportement par défaut
-            loadPage(link.getAttribute('data-link')); // Charger la page liée
+    document.querySelectorAll('a[data-link]').forEach(link => {
+        link.addEventListener("click", event => {
+            event.preventDefault();
+            loadPage(link.getAttribute("data-link"));
         });
     });
 
-    // Vérifier la route actuelle et charger la page correspondante
-    const currentRoute = window.location.hash.replace('#', '') || 'home'; // Par défaut, route 'home'
+    // Charger la page correspondant à l'URL actuelle
+    const currentRoute = window.location.hash.replace("#", "") || "home";
     loadPage(currentRoute);
 
-    // Gérer les changements de l'historique (boutons retour/avance)
-    window.addEventListener('popstate', () => {
-        const route = window.location.hash.replace('#', '') || 'home';
+    // Gérer les changements d'URL (boutons retour/avance du navigateur)
+    window.addEventListener("popstate", () => {
+        const route = window.location.hash.replace("#", "") || "home";
         loadPage(route);
     });
 });
