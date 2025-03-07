@@ -180,7 +180,7 @@ export function init() {
 
     function generateDetailHTML(recette, commentaire) {
         return /*html*/`
-            <div class="recette-detail" data-recette-id="${recette.id}">
+            <div class="recette-detail center" data-recette-id="${recette.id}">
                 <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
                 <h2>${recette.titre}</h2>
                 <div class="meta">
@@ -199,13 +199,13 @@ export function init() {
                 ${generateDetailActions(recette)}
                 <h1>Commentaire<h1>
                 ${generateCommentaire(commentaire)}
-                <h1>Nouveau commentaire<h1>
-                <div>
+                <h1>Nouveau commentaire</h1>
+                <div class="form-container" style="width: 100%; margin : 40px;">
                     <h3>message</h3>
-                    <textarea> </textarea>
+                    <textarea class="form-textarea" rows="10"> </textarea>
                     <h3>Note<h3>
-                    <input type="number" />
-                    <button name="valider">valider</button>
+                    <input class="form-input" type="number" style="width: 50px;" />/5
+                    <button class="button" name="valider">valider</button>
                 </div>
             </div>
         `;
