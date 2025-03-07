@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import schemas
-from app.controllers.recette_ingredient import create_recette_ingredient
+from app.controllers.recette_ingredient import create_recette_ingredient, delete_recette_ingredient
 from app.database import SessionLocal
 from app.Middleware.middleware import check_token
 
@@ -22,3 +22,12 @@ def create_recette_ingredient_endpoint(
 ):
     # Convertir le modèle Pydantic en un modèle SQLAlchemy
     return create_recette_ingredient(db, recette_ingredient, user_id)
+
+
+@router.delete("/recettes/ingredients/")
+def delete_recette_ingredient_endpoint(
+    recette_id: int,
+    ingredient_id: int ,
+    db: Session = Depends(get_db)
+):
+    return delete_recette_ingredient(db, recette_id, ingredient_id)
