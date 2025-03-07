@@ -202,16 +202,29 @@ export function init() {
                 <h1>Nouveau commentaire</h1>
                 <div class="form-container" style="width: 100%; margin : 40px;">
                     <h3>message</h3>
-                    <textarea class="form-textarea" rows="10"> </textarea>
+                    <textarea class="form-textarea" rows="10" id="commentaire"> </textarea>
                     <h3>Note<h3>
-                    <input class="form-input" type="number" style="width: 50px; padding-right : 0px" />/5
-                    <button class="button" name="valider">valider</button>
+                    <input class="form-input" type="number" id="note-input" style="width: 50px; padding-right : 0px" />/5
+                    <button class="button" name="valider" id="bouton-commentaire">valider</button>
                 </div>
             </div>
         `;
     }
+    
 
-    function createCommentaire(){}
+    function createCommentaire(note, commentaire, recette_id){
+        if(note > 5 || note < 1){
+            Swal.fire({
+                icon: 'error',
+                title: 'Note invalide',
+                text: 'La note doit etre comprise entre 1 et 5'
+            })
+        }
+        else{
+            post('commentaires', {note: note, content: commentaire, recipes_id: recette_id})
+        }
+        console.log(note, commentaire, recette_id)
+    }
 
     async function getCommentaire(recette_id){
         try {
@@ -309,6 +322,11 @@ export function init() {
             recetteDetailsDiv.style.display = 'none';
             recettesDiv.style.display = 'block';
         });
+        document.getElementById('bouton-commentaire').addEventListener('click', async () => {
+            const note = document.getElementById('note-input').value;
+            const commentaire = document.getElementById('commentaire').value;
+            createCommentaire(parseInt(note),commentaire, recette.id)
+        })
 
         document.querySelectorAll('.remove-ingredient').forEach(btn => {
             btn.addEventListener('click', handleIngredientDelete);
