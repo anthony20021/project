@@ -19,8 +19,7 @@ def get_commentaire(db: Session, recette_id: int):
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                statut="ko",              
-                message='Une erreur s\'est produite' 
+                detail='Une erreur s\'est produite' 
             )
         
 def create_commentaire(db: Session, commentaire: CommentaireCreate):
@@ -42,16 +41,14 @@ def create_commentaire(db: Session, commentaire: CommentaireCreate):
         print(f"Erreur d'intégrité : {e.orig}")
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                statut="ko",             
-                message='Erreur dintégrité' 
+                detail='Erreur dintégrité' 
             )
     except Exception as e:
         db.rollback()  # Annuler en cas d'autres erreurs
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
-                status_code=status.HTTP_401_UNAUTHORIZED,   
-                statut="ko",               
-                message='Une erreur sest produite' 
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail='Une erreur sest produite' 
             )
         db_commentaire = None 
     else:
@@ -66,7 +63,7 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
     try:
         db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id and Commentaire.user_id == user_id).first()
         if db_commentaire is None:
-            raise HTTPException(status_code=404, message="Commentaire not found")
+            raise HTTPException(status_code=404, detail="Commentaire not found")
 
         if commentaire.content is not None:
             db_commentaire.content = commentaire.content
@@ -75,8 +72,7 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         if (db_commentaire.user_id != commentaire.user_id or db_commentaire.recipes_id != commentaire.recipes_id):
             raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            statut="ko", 
-            message='user_id or recipes_id n\'est pas correct'
+            detail='user_id or recipes_id n\'est pas correct'
         )
 
         db.commit()
@@ -86,16 +82,14 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         print(f"Erreur d'intégrité : {e.orig}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            statut="ko", 
-            message='Erreur d\'intégrité'
+            detail='Erreur d\'intégrité'
         )
     except Exception as e:
         db.rollback()  # Annuler en cas d'autres erreurs
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            statut="ko", 
-            message='Une erreur s\'est produite'
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail='Une erreur s\'est produite'
         )
     else:
         print("Commentaire modifié avec succès.")
@@ -109,7 +103,7 @@ def delete_commentaire(db: Session, commentaire_id: int, user_id: int):
     try:
         db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id and Commentaire.user_id == user_id).first()
         if db_commentaire is None:
-                raise HTTPException(status_code=404, message="Commentaire not found")
+                raise HTTPException(status_code=404, detail="Commentaire not found")
 
         db.delete(db_commentaire)
         db.commit()
@@ -118,8 +112,7 @@ def delete_commentaire(db: Session, commentaire_id: int, user_id: int):
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            statut="ko",
-            message='Une erreur s\'est produite'
+            detail='Une erreur s\'est produite'
         )
     else:
         print("Commentaire supprimé avec succès.")
