@@ -204,7 +204,7 @@ export function init() {
                     <h3>message</h3>
                     <textarea class="form-textarea" rows="10"> </textarea>
                     <h3>Note<h3>
-                    <input class="form-input" type="number" style="width: 50px;" />/5
+                    <input class="form-input" type="number" style="width: 50px; padding-right : 0px" />/5
                     <button class="button" name="valider">valider</button>
                 </div>
             </div>
