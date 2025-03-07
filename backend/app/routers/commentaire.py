@@ -19,13 +19,13 @@ def create_commentaire(commentaire: schemas.CommentaireCreate, db: Session = Dep
     return create_new_commentaire(db, commentaire)  
 
 @router.get("/commentaires/{recette_id}")
-def get_commentaire(recette_id: int, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
-    return get_commentaire_all(db, recette_id, user_id)
+def get_commentaire(recette_id: int, db: Session = Depends(get_db)):
+    return get_commentaire_all(db, recette_id)
 
 @router.put("/commentaire_modifie/{commentaire_id}")
-def modify_commentaire(commentaire_id: int, commentaire: schemas.CommentaireCreate, db: Session = Depends(get_db)):
-    return modify_comment(db, commentaire_id, commentaire)
+def modify_commentaire(commentaire_id: int, commentaire: schemas.CommentaireCreate, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return modify_comment(db, commentaire_id, commentaire, user_id)
 
 @router.delete("/commentaires_delete/{commentaire_id}")
-def delete_commentaire(commentaire_id: int, db: Session = Depends(get_db)):
-    return delete_comment(db, commentaire_id)
+def delete_commentaire(commentaire_id: int, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return delete_comment(db, commentaire_id, user_id)
