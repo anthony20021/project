@@ -245,7 +245,7 @@ export function init() {
                     <div class="commentaire">
                         <p>contenu : ${i.content}</p> 
                         <p>note : ${i.note}</p>
-                        ${i.user_id == user_id ? `<button class="button" data-id="${{'commentaire_id' : i.id, 'user_id' : user_id}}" style="background-color : red;">Supprimer</button>` : ""}
+                        ${i.user_id == user_id ?/*html*/ `<button class="button" data-id="${{'commentaire_id' : i.id, 'user_id' : user_id}}" style="background-color : red;">Supprimer</button>` : ""}
                     </div>`;
                 }).join('')
                 : /*html*/`<p>Aucun commentaire</p>`;
