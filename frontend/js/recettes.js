@@ -222,6 +222,8 @@ export function init() {
         }
         else{
             post('commentaires', {note: note, content: commentaire, recipes_id: recette_id})
+            // raffraichir
+            showRecetteDetails(recette_id)
         }
         console.log(note, commentaire, recette_id)
     }
@@ -243,7 +245,6 @@ export function init() {
                     <div class="commentaire">
                         contenu : ${i.content} 
                         note : ${i.note} 
-                        date : ${i.created_at}
                     </div>`
                 )).join('')
                 : /*html*/`<p>Aucun commentaire</p>`;

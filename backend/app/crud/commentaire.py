@@ -22,42 +22,49 @@ def get_commentaire(db: Session, recette_id: int):
                 detail='Une erreur s\'est produite' 
             )
         
-def create_commentaire(db: Session, commentaire: CommentaireCreate):
 
-    db_commentaire = None
+def create_commentaire(db: Session, commentaire: CommentaireCreate, user_id: int):
+    # Vérifier si un commentaire existe déjà pour cet utilisateur et cette recette
+    existing_comment = db.query(Commentaire).filter_by(user_id=user_id, recipes_id=commentaire.recipes_id).first()
+
+    if existing_comment:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Vous avez déjà commenté cette recette."
+        )
 
     try:
         db_commentaire = Commentaire(
-            content = commentaire.content, 
-            note = commentaire.note, 
-            created_at=date.today(), 
-            user_id = commentaire.user_id, 
-            recipes_id = commentaire.recipes_id
-            )
+            content=commentaire.content,
+            note=commentaire.note,
+            created_at=date.today(),
+            user_id=user_id,
+            recipes_id=commentaire.recipes_id
+        )
         db.add(db_commentaire)
-        db.commit()  
+        db.commit()
+        db.refresh(db_commentaire)
     except IntegrityError as e:
-        db.rollback() 
+        db.rollback()
         print(f"Erreur d'intégrité : {e.orig}")
-        raise HTTPException(                 
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail='Erreur dintégrité' 
-            )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Erreur d'intégrité"
+        )
     except Exception as e:
-        db.rollback()  # Annuler en cas d'autres erreurs
+        db.rollback()
         print(f"Une erreur s'est produite : {e}")
-        raise HTTPException(                 
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail='Une erreur sest produite' 
-            )
-        db_commentaire = None 
-    else:
-        print("Commentaire créé avec succès.") 
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Une erreur s'est produite"
+        )
+
     return {
         "statut": "ok",
-        "message": "Commentaire crée avec succès.",
-        "data": []
-        }
+        "message": "Commentaire créé avec succès.",
+        "data": db_commentaire
+    }
+
 
 def modify_commentaire(db: Session, commentaire_id: int, commentaire: CommentaireCreate, user_id: int):
     try:
