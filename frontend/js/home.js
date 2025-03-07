@@ -17,7 +17,7 @@ export function init() {
                         <p><strong>Type:</strong> ${recipe.type}</p>
                         <p><strong>Temps:</strong> ${recipe.temps_preparation} min</p>
                         <div class="button-group">
-                            <button class="button view-details" data-id="${recipe.id}">Voir la recette</button>
+                            <button class="button view-details" data-id="${recipe.id}"></button>
                         </div>
                     </div>
                 `).join('');
