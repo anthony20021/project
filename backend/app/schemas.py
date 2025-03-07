@@ -73,6 +73,9 @@ class Recette_ingredient(BaseModel):
 class Recette_ingredientCreate(Recette_ingredient):
     pass
 
+class Recette_ingredientDelete(BaseModel):
+    recette_id: int
+    ingredient_id: int
 
 class Favorie(BaseModel):
     recette_id: int

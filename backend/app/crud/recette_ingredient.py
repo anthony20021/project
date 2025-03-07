@@ -35,28 +35,37 @@ def create_recette_ingredient(db: Session, recette_ingredient_create, user_id: i
     return recette_ingredient
 
 
-def delete_recette_ingredient(db: Session, recette_id: int, ingredient_id: int):
+def delete_recette_ingredient(db: Session, recette_ingredient_delete, user_id: int):
     try:
-        deleted_rows = db.query(Recette_ingredient).filter(
-            and_(
-                Recette_ingredient.recette_id == recette_id,
-                Recette_ingredient.ingredient_id == ingredient_id  # Vérifie si c'est bien le bon champ
+        # Vérifier que la recette appartient bien à l'utilisateur avant de supprimer
+        recette_ingredient = (
+            db.query(Recette_ingredient)
+            .join(Recette, Recette_ingredient.recette_id == Recette.id)  # Jointure avec Recette
+            .filter(
+                and_(
+                    Recette_ingredient.recette_id == recette_ingredient_delete.recette_id,
+                    Recette_ingredient.ingredient_id == recette_ingredient_delete.ingredient_id,
+                    Recette.user_id == user_id  # Vérifie que l'utilisateur est le propriétaire de la recette
+                )
             )
-        ).delete()
+            .first()
+        )
 
-        db.commit()
-
-        if deleted_rows == 0:
+        if not recette_ingredient:
             raise HTTPException(
-                status_code=404,
-                detail="Aucun ingrédient trouvé pour cette recette"
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Recette ou ingrédient introuvable, ou vous n'êtes pas autorisé à supprimer cet ingrédient"
             )
+
+        # Suppression de l'ingrédient
+        db.delete(recette_ingredient)
+        db.commit()
 
         return {"message": "Recette_ingredient supprimé avec succès."}
 
     except Exception as e:
         db.rollback()
         raise HTTPException(
-            status_code=500,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Une erreur s'est produite : {str(e)}"
         )

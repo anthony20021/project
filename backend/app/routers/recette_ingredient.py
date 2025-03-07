@@ -26,8 +26,8 @@ def create_recette_ingredient_endpoint(
 
 @router.delete("/recettes/ingredients/")
 def delete_recette_ingredient_endpoint(
-    recette_id: int,
-    ingredient_id: int ,
-    db: Session = Depends(get_db)
+    recette_ingredient: schemas.Recette_ingredientDelete,
+    db: Session = Depends(get_db),
+    user_id: int = Depends(check_token)
 ):
-    return delete_recette_ingredient(db, recette_id, ingredient_id)
+    return delete_recette_ingredient(db, recette_ingredient, user_id)
