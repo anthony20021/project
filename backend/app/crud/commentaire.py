@@ -12,7 +12,7 @@ def get_commentaire(db: Session, recette_id: int):
         return{
         "data": db.query(Commentaire).filter(Commentaire.recipes_id == recette_id).all(),
         "status": "ok",
-        "message": "Commentaire supprimé avec succès."
+        "message": "Commentaire récupéré avec succès."
         }
     
     except Exception as e:
@@ -20,7 +20,7 @@ def get_commentaire(db: Session, recette_id: int):
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 status="ko",              
-                message='Une erreur sest produite' 
+                message='Une erreur s\'est produite' 
             )
         
 def create_commentaire(db: Session, commentaire: CommentaireCreate):

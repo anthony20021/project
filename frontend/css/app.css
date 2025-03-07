@@ -382,3 +382,16 @@ nav a.active {
 #recetteDetails button:hover {
     background-color: #ff5733;
 }
+
+.commentaire {
+    background-color: #d8d8d8;              /* Clean white background */
+    border: 1px solid #000000;              /* Light gray border for subtle separation */
+    border-radius: 20px;                     /* Smooth rounded corners */
+    padding: 16px;                           /* Generous padding for a spacious feel */
+    margin: 12px 0;                          /* Vertical margin for spacing between comments */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: 'Helvetica Neue', sans-serif; /* Modern font for readability */
+    font-size: 15px;                         /* Standard font size */
+    line-height: 1.6;                        /* Increased line height for better readability */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
