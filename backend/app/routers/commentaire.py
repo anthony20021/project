@@ -15,8 +15,8 @@ def get_db():
         db.close()
 
 @router.post("/commentaires/")
-def create_commentaire(commentaire: schemas.CommentaireCreate, db: Session = Depends(get_db)):
-    return create_new_commentaire(db, commentaire)  
+def create_commentaire(commentaire: schemas.CommentaireCreate, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return create_new_commentaire(db, commentaire, user_id)  
 
 @router.get("/commentaires/{recette_id}")
 def get_commentaire(recette_id: int, db: Session = Depends(get_db)):
