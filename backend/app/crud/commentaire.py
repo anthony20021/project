@@ -7,9 +7,9 @@ from app.schemas import CommentaireCreate
 from sqlalchemy.exc import IntegrityError
 
 
-def get_commentaire(db: Session, recette_id: int, user_id: int):
+def get_commentaire(db: Session, recette_id: int):
     try:
-        return db.query(Commentaire).filter(Commentaire.recipes_id == recette_id and Commentaire.user_id == user_id).all()
+        return db.query(Commentaire).filter(Commentaire.recipes_id == recette_id).all()
     except Exception as e:
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
@@ -50,9 +50,9 @@ def create_commentaire(db: Session, commentaire: CommentaireCreate):
         print("Commentaire créé avec succès.") 
     return "Commentaire créé avec succès."
 
-def modify_commentaire(db: Session, commentaire_id: int, commentaire: CommentaireCreate):
+def modify_commentaire(db: Session, commentaire_id: int, commentaire: CommentaireCreate, user_id: int):
     try:
-        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id).first()
+        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id and Commentaire.user_id == user_id).first()
         if db_commentaire is None:
             raise HTTPException(status_code=404, detail="Commentaire not found")
 
@@ -86,9 +86,9 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         print("Commentaire modifié avec succès.")
     return db_commentaire
 
-def delete_commentaire(db: Session, commentaire_id: int):
+def delete_commentaire(db: Session, commentaire_id: int, user_id: int):
     try:
-        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id).first()
+        db_commentaire = db.query(Commentaire).filter(Commentaire.id == commentaire_id and Commentaire.user_id == user_id).first()
         if db_commentaire is None:
                 raise HTTPException(status_code=404, detail="Commentaire not found")
 
