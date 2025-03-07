@@ -190,7 +190,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <constraint name="fk_recettesid" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Recettes_ingredients&quot;">
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Recettes_ingredients&quot;">
 	<columns names="recette_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
@@ -214,7 +214,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </constraint>
 
 <constraint name="fk_recetteid" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Commentaires&quot;">
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Commentaires&quot;">
 	<columns names="recipes_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
@@ -226,7 +226,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </constraint>
 
 <constraint name="fk_recette_id" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Favories&quot;">
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.&quot;Recettes&quot;" table="public.&quot;Favories&quot;">
 	<columns names="recette_id" ref-type="src-columns"/>
 	<columns names="id" ref-type="dst-columns"/>
 </constraint>
