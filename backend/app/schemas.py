@@ -41,7 +41,7 @@ class RecetteBase(BaseModel):
 class RecetteCreate(RecetteBase):
     pass
 
-class Recette(RecetteBase):
+class Recette(BaseModel):
     id: int
 
     class Config:
@@ -74,6 +74,8 @@ class Recette_ingredientCreate(Recette_ingredient):
 class Recette_ingredientDelete(BaseModel):
     recette_id: int
     ingredient_id: int
+    
+
 
 class Favorie(BaseModel):
     recette_id: int

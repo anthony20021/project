@@ -1,7 +1,7 @@
 from app.models.recette import Recette
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
-from app.schemas import RecetteCreate
+from app.schemas import RecetteCreate, Recette as RecetteSchema
 from app.models.recette_ingredient import Recette_ingredient
 
 def read_recette(db: Session, recette_id: int):
@@ -51,6 +51,8 @@ def list_recettes(db: Session):
 
 def delete_recette(db: Session, recette_id: int, user_id: int):
     try:
+        print(recette_id)
+        print(user_id)
         db.query(Recette).filter(Recette.id == recette_id, Recette.user_id == user_id).delete()
         db.commit()
         print("Recette supprimée avec succès.")

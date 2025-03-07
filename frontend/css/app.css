@@ -144,7 +144,6 @@ nav a.active {
 .recette-detail {
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
 }
 
 .favorites-list {
@@ -341,7 +340,7 @@ nav a.active {
 
 #recetteDetails {
     width: 100%;
-    padding: 20px;
+
     background-color: #f4f4f4;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -389,8 +388,8 @@ nav a.active {
 }
 
 .commentaire {
-    background-color: #d8d8d8;              /* Clean white background */
-    border: 1px solid #000000;              /* Light gray border for subtle separation */
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);              /* Clean white background */             /* Light gray border for subtle separation */
     border-radius: 20px;                     /* Smooth rounded corners */
     padding: 16px;                           /* Generous padding for a spacious feel */
     margin: 12px 0;                          /* Vertical margin for spacing between comments */
