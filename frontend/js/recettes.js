@@ -44,7 +44,6 @@ export function init() {
         try {
             // Charger les recettes de base
             const recettes = await fetchRecettes();
-
             // Charger les favoris seulement si connecté
             let favoris = [];
             if (token) {
@@ -73,10 +72,10 @@ export function init() {
         if (!token) return recettes;
 
         return recettes.map(recette => ({
-            ...recette,
-            is_favorite: favoris.data.some(f => f.recette_id === recette.id),
-            favori_id: favoris.data.find(f => f.recette_id === recette.id)?.id
-        }));
+                ...recette,
+                is_favorite: favoris.data.some(f => f.recette_id === recette.id),
+                favori_id: favoris.data.find(f => f.recette_id === recette.id)?.id
+            }));
     }
 
     function filterRecettes() {
@@ -159,9 +158,11 @@ export function init() {
     async function showRecetteDetails(recetteId) {
         try {
             const recette = await fetchRecetteDetails(recetteId);
+            const commentaire = await getCommentaire(recetteId);
+            console.log(commentaire)
             if (!recette) return;
 
-            recetteDetailsDiv.innerHTML = generateDetailHTML(recette);
+            recetteDetailsDiv.innerHTML = generateDetailHTML(recette, commentaire);
             recetteDetailsDiv.style.display = 'block';
             recettesDiv.style.display = 'none';
 
@@ -177,12 +178,13 @@ export function init() {
         return result.status === 200 ? result.data : null;
     }
 
-    function generateDetailHTML(recette) {
+    function generateDetailHTML(recette, commentaire) {
         return /*html*/`
             <div class="recette-detail" data-recette-id="${recette.id}">
                 <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
                 <h2>${recette.titre}</h2>
                 <div class="meta">
+                    <span>Note: ${generateNote(commentaire.data.data)}<span>
                     <span>Type: ${recette.type}</span>
                     <span>Temps: ${recette.temps_preparation} min</span>
                 </div>
@@ -196,7 +198,64 @@ export function init() {
                 </ul>
                 ${generateDetailActions(recette)}
             </div>
+            <h1>Commentaire<h1>
+            ${generateCommentaire(commentaire)}
+            <h1>Nouveau commentaire<h1>
+            <div>
+                <h3>message</h3>
+                <textarea> </textarea>
+                <h3>Note<h3>
+                <input type="number" />
+                <button name="valider">valider</button>
+            </div>
         `;
+    }
+
+    function createCommentaire()
+
+    async function getCommentaire(recette_id){
+        try {
+            const commentaire = get(`commentaires/${recette_id}`);
+            return commentaire
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    function generateCommentaire(commentaire) {
+        try {
+            return commentaire.data.data?.length > 0
+                ? commentaire.data.data.map(i => (
+                    `
+                    <div class="commentaire">
+                        contenu : ${i.content} 
+                        note : ${i.note} 
+                        date : ${i.created_at}
+                    </div>`
+                )).join('')
+                : '<div>No comments available</div>';
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            return '<div>Error fetching comments</div>';
+        }
+    }
+
+    function generateNote(commentaires){
+        try {
+            let note = 0;
+            const nbCommentaire = commentaires.length;
+            commentaires.forEach(commentaire => {
+                note += parseInt(commentaire.note)
+            });
+            note = note/nbCommentaire
+            return /*html*/`
+                <p>${note.toFixed(1)}</p>
+            `;
+        }
+        catch (error){
+            console.error(error)
+            return "<p>Erreur</p>"
+        }
     }
 
     function generateIngredientsList(ingredients, recette_user_id) {
