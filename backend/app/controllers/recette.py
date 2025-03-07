@@ -19,9 +19,9 @@ def list_recettes(db: Session):
     return crud.list_recettes(db)
 
 
-def delete_recette(db: Session, recette_id: int):
-    return crud.delete_recette(db, recette_id)
+def delete_recette(db: Session, recette_id: int, user_id: int):
+    return crud.delete_recette(db, recette_id, user_id)
 
 
-def update_recette(db: Session, recette_id: int, recette: RecetteCreate):
-    return crud.update_recette(db, recette_id, recette)
+def update_recette(db: Session, recette_id: int, recette: RecetteCreate, user_id: int):
+    return crud.update_recette(db, recette_id, recette, user_id)

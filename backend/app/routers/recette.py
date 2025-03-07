@@ -36,9 +36,9 @@ def list_recettes_endpoint(db: Session = Depends(get_db)):
     return list_recettes(db)
 
 @router.delete("/recettes/")
-def delete_recette_endpoint(recette_id: int, db: Session = Depends(get_db)):
-    return delete_recette(db, recette_id)
+def delete_recette_endpoint(recette_id: int, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return delete_recette(db, recette_id, user_id)
 
 @router.put("/recettes/")
-def update_recette_endpoint(recette_id: int, recette: schemas.RecetteCreate, db: Session = Depends(get_db)):
-    return update_recette(db, recette_id, recette)
+def update_recette_endpoint(recette_id: int, recette: schemas.RecetteCreate, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
+    return update_recette(db, recette_id, recette, user_id)
