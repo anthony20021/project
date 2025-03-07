@@ -192,17 +192,17 @@ export function init() {
                 <pre class="instructions">${recette.instructions}</pre>
                 <h3>Ingrédients</h3>
                 <ul class="ingredients">
-                    ${generateIngredientsList(recette.recettes_ingredients)}
+                    ${generateIngredientsList(recette.recettes_ingredients, recette.user_id)}
                 </ul>
                 ${generateDetailActions(recette)}
             </div>
         `;
     }
 
-    function generateIngredientsList(ingredients, user_id) {
+    function generateIngredientsList(ingredients, recette_user_id) {
         return ingredients?.length > 0
             ? ingredients.map(i => {
-                const deleteButton = (user_id == i.user_id) 
+                const deleteButton = (user_id == recette_user_id) 
                     ? /*html*/`<button class="remove-ingredient button" data-id="${i.ingredient_id}" style="background-color : red; width: auto;">X</button>` 
                     : '';
     
