@@ -49,9 +49,9 @@ def list_recettes(db: Session):
 
 
 
-def delete_recette(db: Session, recette_id: int):
+def delete_recette(db: Session, recette_id: int, user_id: int):
     try:
-        db.query(Recette).filter(Recette.id == recette_id).delete()
+        db.query(Recette).filter(Recette.id == recette_id, Recette.user_id == user_id).delete()
         db.commit()
         print("Recette supprimée avec succès.")
         return True
@@ -63,9 +63,9 @@ def delete_recette(db: Session, recette_id: int):
         print(f"Une erreur s'est produite : {e}")
     return False
 
-def update_recette(db: Session, recette_id: int, recette: RecetteCreate):
+def update_recette(db: Session, recette_id: int, recette: RecetteCreate, user_id: int):
     try:
-        db_recette = db.query(Recette).filter(Recette.id == recette_id).first()
+        db_recette = db.query(Recette).filter(Recette.id == recette_id, Recette.user_id == user_id).first()
         if db_recette:
             db_recette.titre = recette.titre
             db_recette.description = recette.description
