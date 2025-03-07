@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 from app import schemas
 from app.controllers.recette import create_recette, get_recette_by_id, list_recettes, delete_recette, update_recette
@@ -36,9 +36,12 @@ def list_recettes_endpoint(db: Session = Depends(get_db)):
     return list_recettes(db)
 
 @router.delete("/recettes/")
-def delete_recette_endpoint(recette_id: int, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
-    return delete_recette(db, recette_id, user_id)
-
+def delete_recette_endpoint(
+    recette: schemas.Recette = Body(...),  # Le corps de la requête
+    db: Session = Depends(get_db),
+    user_id: int = Depends(check_token)
+):
+    return delete_recette(db, recette, user_id)
 @router.put("/recettes/")
 def update_recette_endpoint(recette_id: int, recette: schemas.RecetteCreate, db: Session = Depends(get_db), user_id: int = Depends(check_token)):
     return update_recette(db, recette_id, recette, user_id)

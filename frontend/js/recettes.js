@@ -180,6 +180,9 @@ export function init() {
     function generateDetailHTML(recette, commentaire) {
         return /*html*/`
             <div class="recette-detail center" data-recette-id="${recette.id}">
+                <div>
+                    ${generateSupp(recette)}
+                </div>
                 <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
                 <h2>${recette.titre}</h2>
                 <div class="meta">
@@ -241,10 +244,19 @@ export function init() {
         try {
             return commentaire.data.data?.length > 0
                 ? commentaire.data.data.map(i => {
+                    let filledStars = '';
+                    let emptyStars = '';
+                    for (let j = 0; j < 5; j++) {
+                        if (j < i.note) {
+                            filledStars += '⭐'; 
+                        } else {
+                            emptyStars += '✰'; 
+                        }
+                    }
                     return /*html*/`
                     <div class="commentaire">
-                        <p>contenu : ${i.content}</p> 
-                        <p>note : ${i.note}</p>
+                        <p>Note : ${filledStars}${emptyStars}</p>
+                        <p>contenu : ${i.content}</p>
                         ${i.user_id == user_id ? `<button class="button" data-id="${i.id}" style="background-color : red;">Supprimer</button>` : ""}
                     </div>`;
                 }).join('')
@@ -254,6 +266,7 @@ export function init() {
             return '<div>Error fetching comments</div>';
         }
     }
+    
 
     async function handleCommentaireDelete(event) {
         const button = event.target;
@@ -274,6 +287,17 @@ export function init() {
         }
     }
 
+    function generateSupp(recette){
+        if(user_id == recette.user_id){
+            return /*html*/`
+                <button class="button" style="background-color : red;" id="deleteRecette" data-id="${recette.id}">Supprimer</button>
+            `;
+        }
+        else{
+            return "";
+        }
+    }
+
     function generateNote(commentaires) {
         try {
             if (commentaires.length > 0) {
@@ -283,8 +307,21 @@ export function init() {
                     note += parseInt(commentaire.note);
                 });
                 note = note / nbCommentaire;
+    
+                // Générer les étoiles remplies et vides en fonction de la note
+                let filledStars = '';
+                let emptyStars = '';
+                for (let i = 0; i < 5; i++) {
+                    if (i < Math.round(note)) {
+                        filledStars += '⭐'; // Étoile remplie
+                    } else {
+                        emptyStars += '✰'; // Étoile vide
+                    }
+                }
+    
                 return /*html*/`
-                    <p> ${note.toFixed(1)}</p>
+                    <p>${filledStars}${emptyStars}</p>
+                    <p>(${note.toFixed(1)})</p>
                 `;
             } else {
                 return /*html*/`
@@ -354,7 +391,20 @@ export function init() {
             btn.addEventListener('click', handleCommentaireDelete);
         });
 
+        document.getElementById('deleteRecette')?.addEventListener('click', handleDeleteRecette(recette.id));
+
         document.querySelector('.favorite-btn')?.addEventListener('click', handleFavorite);
+    }
+
+    function handleDeleteRecette(recetteId){
+        return async () => {
+            try {
+                await del(`recettes`, { id: recetteId });
+                loadData();
+            } catch (error) {
+                console.error("Erreur lors de la suppression de la recette :", error);
+            }
+        };
     }
 
     async function handleIngredientDelete(event) {
