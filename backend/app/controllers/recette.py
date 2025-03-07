@@ -17,3 +17,11 @@ def create_recette(db: Session, recette: RecetteCreate, user_id: int):
 
 def list_recettes(db: Session):
     return crud.list_recettes(db)
+
+
+def delete_recette(db: Session, recette_id: int):
+    return crud.delete_recette(db, recette_id)
+
+
+def update_recette(db: Session, recette_id: int, recette: RecetteCreate):
+    return crud.update_recette(db, recette_id, recette)

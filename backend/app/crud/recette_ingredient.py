@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.models.recette_ingredient import Recette_ingredient
 from app.models.recette import Recette
 from fastapi import HTTPException, status
+from sqlalchemy import and_
 
 
 def create_recette_ingredient(db: Session, recette_ingredient_create, user_id: int):
@@ -32,3 +33,30 @@ def create_recette_ingredient(db: Session, recette_ingredient_create, user_id: i
     db.refresh(recette_ingredient)
     
     return recette_ingredient
+
+
+def delete_recette_ingredient(db: Session, recette_id: int, ingredient_id: int):
+    try:
+        deleted_rows = db.query(Recette_ingredient).filter(
+            and_(
+                Recette_ingredient.recette_id == recette_id,
+                Recette_ingredient.ingredient_id == ingredient_id  # Vérifie si c'est bien le bon champ
+            )
+        ).delete()
+
+        db.commit()
+
+        if deleted_rows == 0:
+            raise HTTPException(
+                status_code=404,
+                detail="Aucun ingrédient trouvé pour cette recette"
+            )
+
+        return {"message": "Recette_ingredient supprimé avec succès."}
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Une erreur s'est produite : {str(e)}"
+        )

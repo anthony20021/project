@@ -18,6 +18,8 @@ def read_recette(db: Session, recette_id: int):
     except Exception as e:
         print(f"Une erreur s'est produite lors de la récupération de la recette : {e}")
         return None
+
+
 def create_recette(db: Session, recette: RecetteCreate, user_id):
     db_recette = Recette(titre=recette.titre, description=recette.description, instructions=recette.instructions, temps_preparation=recette.temps_preparation, type=recette.type, user_id=user_id)
     try:
@@ -47,8 +49,40 @@ def list_recettes(db: Session):
 
 
 
+def delete_recette(db: Session, recette_id: int):
+    try:
+        db.query(Recette).filter(Recette.id == recette_id).delete()
+        db.commit()
+        print("Recette supprimée avec succès.")
+        return True
+    except IntegrityError as e:
+        db.rollback()
+        print(f"Erreur d'intégrité : {e.orig}")
+    except Exception as e:
+        db.rollback()
+        print(f"Une erreur s'est produite : {e}")
+    return False
 
+def update_recette(db: Session, recette_id: int, recette: RecetteCreate):
+    try:
+        db_recette = db.query(Recette).filter(Recette.id == recette_id).first()
+        if db_recette:
+            db_recette.titre = recette.titre
+            db_recette.description = recette.description
+            db_recette.instructions = recette.instructions
+            db_recette.temps_preparation = recette.temps_preparation
+            db_recette.type = recette.type
+            db.commit()
+            print("Recette mise à jour avec succès.")
+            return True
+        else:
+            print("Recette non trouvée.")
+            return False
+    except IntegrityError as e:
+        db.rollback()
+        print(f"Erreur d'intégrité : {e.orig}")
+    except Exception as e:
+        db.rollback()
+        print(f"Une erreur s'est produite : {e}")
+    return False
 
-#lister les recettes par ingredient
-
-#lister les recettes par utilisateur
