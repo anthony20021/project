@@ -72,10 +72,10 @@ export function init() {
         if (!token) return recettes;
 
         return recettes.map(recette => ({
-                ...recette,
-                is_favorite: favoris.data.some(f => f.recette_id === recette.id),
-                favori_id: favoris.data.find(f => f.recette_id === recette.id)?.id
-            }));
+            ...recette,
+            is_favorite: favoris.data.some(f => f.recette_id === recette.id),
+            favori_id: favoris.data.find(f => f.recette_id === recette.id)?.id
+        }));
     }
 
     function filterRecettes() {
@@ -159,7 +159,6 @@ export function init() {
         try {
             const recette = await fetchRecetteDetails(recetteId);
             const commentaire = await getCommentaire(recetteId);
-            console.log(commentaire)
             if (!recette) return;
 
             recetteDetailsDiv.innerHTML = generateDetailHTML(recette, commentaire);
@@ -210,30 +209,31 @@ export function init() {
             </div>
         `;
     }
-    
 
-    function createCommentaire(note, commentaire, recette_id){
-        if(note > 5 || note < 1){
+    async function createCommentaire(note, commentaire, recette_id) {
+        if (note > 5 || note < 1) {
             Swal.fire({
                 icon: 'error',
                 title: 'Note invalide',
-                text: 'La note doit etre comprise entre 1 et 5'
-            })
+                text: 'La note doit être comprise entre 1 et 5'
+            });
+        } else {
+            try {
+                await post('commentaires', { note: note, content: commentaire, recipes_id: recette_id });
+                showRecetteDetails(recette_id); // Rafraîchir les détails après l'ajout
+            } catch (error) {
+                handleError("Erreur lors de la création du commentaire", error);
+            }
         }
-        else{
-            post('commentaires', {note: note, content: commentaire, recipes_id: recette_id})
-            // raffraichir
-            showRecetteDetails(recette_id)
-        }
-        console.log(note, commentaire, recette_id)
     }
 
-    async function getCommentaire(recette_id){
+    async function getCommentaire(recette_id) {
         try {
-            const commentaire = get(`commentaires/${recette_id}`);
-            return commentaire
+            const commentaire = await get(`commentaires/${recette_id}`);
+            return commentaire;
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            return { data: { data: [] } }; // Retourner un objet vide en cas d'erreur
         }
     }
 
@@ -245,7 +245,7 @@ export function init() {
                     <div class="commentaire">
                         <p>contenu : ${i.content}</p> 
                         <p>note : ${i.note}</p>
-                        ${i.user_id == user_id ? `<button class="button" data-id="${{'commentaire_id' : i.id, 'user_id' : user_id}}" style="background-color : red;">Supprimer</button>` : ""}
+                        ${i.user_id == user_id ? `<button class="button" data-id="${i.id}" style="background-color : red;">Supprimer</button>` : ""}
                     </div>`;
                 }).join('')
                 : /*html*/`<p>Aucun commentaire</p>`;
@@ -254,47 +254,62 @@ export function init() {
             return '<div>Error fetching comments</div>';
         }
     }
-    
-    function generateNote(commentaires){
+
+    async function handleCommentaireDelete(event) {
+        const button = event.target;
+
+        if (!button || !button.dataset.id) {
+            console.error("Erreur : Bouton ou ID du commentaire manquant.");
+            return;
+        }
+
+        const commentaireId = button.dataset.id;
+        const recetteId = document.querySelector('.recette-detail').dataset.recetteId;
+
         try {
-            if(commentaires.length > 0){
+            await del(`commentaires_delete/${commentaireId}`);
+            showRecetteDetails(recetteId); // Rafraîchir les détails après la suppression
+        } catch (error) {
+            console.error("Erreur lors de la suppression du commentaire :", error);
+        }
+    }
+
+    function generateNote(commentaires) {
+        try {
+            if (commentaires.length > 0) {
                 let note = 0;
                 const nbCommentaire = commentaires.length;
                 commentaires.forEach(commentaire => {
-                    note += parseInt(commentaire.note)
+                    note += parseInt(commentaire.note);
                 });
-                note = note/nbCommentaire
+                note = note / nbCommentaire;
                 return /*html*/`
                     <p> ${note.toFixed(1)}</p>
                 `;
-
-            }
-            else{
+            } else {
                 return /*html*/`
                     <p>Pas de note</p>
-                `
+                `;
             }
-        }
-        catch (error){
-            console.error(error)
-            return "<p>Erreur</p>"
+        } catch (error) {
+            console.error(error);
+            return "<p>Erreur</p>";
         }
     }
 
     function generateIngredientsList(ingredients, recette_user_id) {
         return ingredients?.length > 0
             ? ingredients.map(i => {
-                const deleteButton = (user_id == recette_user_id) 
-                    ? /*html*/`<button class="remove-ingredient button" data-id="${i.ingredient_id}" style="background-color : red; width: auto;">X</button>` 
+                const deleteButton = (user_id == recette_user_id)
+                    ? /*html*/`<button class="remove-ingredient button" data-id="${i.ingredient_id}" style="background-color : red; width: auto;">X</button>`
                     : '';
-    
+
                 return /*html*/`
                     <li>${i.ingredient.name} - ${i.quantity} ${deleteButton}</li>
                 `;
             }).join('')
             : '<li>Aucun ingrédient</li>';
     }
-    
 
     function generateDetailActions(recette) {
         return `
@@ -324,14 +339,19 @@ export function init() {
             recetteDetailsDiv.style.display = 'none';
             recettesDiv.style.display = 'block';
         });
+
         document.getElementById('bouton-commentaire').addEventListener('click', async () => {
             const note = document.getElementById('note-input').value;
             const commentaire = document.getElementById('commentaire').value;
-            createCommentaire(parseInt(note),commentaire, recette.id)
-        })
+            await createCommentaire(parseInt(note), commentaire, recette.id);
+        });
 
         document.querySelectorAll('.remove-ingredient').forEach(btn => {
             btn.addEventListener('click', handleIngredientDelete);
+        });
+
+        document.querySelectorAll('.button[data-id]').forEach(btn => {
+            btn.addEventListener('click', handleCommentaireDelete);
         });
 
         document.querySelector('.favorite-btn')?.addEventListener('click', handleFavorite);
@@ -342,22 +362,18 @@ export function init() {
         const ingredientId = button.dataset.id;
         const recetteId = button.closest('.recette-detail').dataset.recetteId;
 
-        console.log("Recette ID:", recetteId);
-        console.log("Ingrédient ID:", ingredientId);
-    
         if (!recetteId || !ingredientId) {
             handleError("Erreur", "ID de recette ou d'ingrédient manquant.");
             return;
         }
-    
+
         try {
             await del(`recettes/ingredients`, { recette_id: recetteId, ingredient_id: ingredientId });
-            showRecetteDetails(recetteId); 
+            showRecetteDetails(recetteId);
         } catch (error) {
             handleError("Erreur de suppression d'ingrédient", error);
         }
     }
-    
 
     async function initIngredientForm(recetteId) {
         const ingredients = await fetchIngredients();
