@@ -396,13 +396,33 @@ export function init() {
         document.querySelector('.favorite-btn')?.addEventListener('click', handleFavorite);
     }
 
-    function handleDeleteRecette(recetteId){
+    function handleDeleteRecette(recetteId) {
         return async () => {
             try {
+                // Supprimer la recette
                 await del(`recettes`, { id: recetteId });
+    
+                // Fermer la vue des détails
+                recetteDetailsDiv.style.display = 'none';
+                recettesDiv.style.display = 'block';
+    
+                // Recharger les recettes
                 loadData();
+    
+                // Afficher un message de succès
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Recette supprimée',
+                    text: 'La recette a été supprimée avec succès.',
+                    timer: 2000
+                });
             } catch (error) {
                 console.error("Erreur lors de la suppression de la recette :", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'La suppression de la recette a échoué.'
+                });
             }
         };
     }
