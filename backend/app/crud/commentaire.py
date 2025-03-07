@@ -11,7 +11,7 @@ def get_commentaire(db: Session, recette_id: int):
     try:
         return{
         "data": db.query(Commentaire).filter(Commentaire.recipes_id == recette_id).all(),
-        "status": "ok",
+        "statut": "ok",
         "message": "Commentaire récupéré avec succès."
         }
     
@@ -19,7 +19,7 @@ def get_commentaire(db: Session, recette_id: int):
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                status="ko",              
+                statut="ko",              
                 message='Une erreur s\'est produite' 
             )
         
@@ -42,7 +42,7 @@ def create_commentaire(db: Session, commentaire: CommentaireCreate):
         print(f"Erreur d'intégrité : {e.orig}")
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                status="ko",             
+                statut="ko",             
                 message='Erreur dintégrité' 
             )
     except Exception as e:
@@ -50,14 +50,14 @@ def create_commentaire(db: Session, commentaire: CommentaireCreate):
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(                 
                 status_code=status.HTTP_401_UNAUTHORIZED,   
-                status="ko",               
+                statut="ko",               
                 message='Une erreur sest produite' 
             )
         db_commentaire = None 
     else:
         print("Commentaire créé avec succès.") 
     return {
-        "status": "ok",
+        "statut": "ok",
         "message": "Commentaire crée avec succès.",
         "data": []
         }
@@ -75,7 +75,7 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         if (db_commentaire.user_id != commentaire.user_id or db_commentaire.recipes_id != commentaire.recipes_id):
             raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            status="ko", 
+            statut="ko", 
             message='user_id or recipes_id n\'est pas correct'
         )
 
@@ -86,7 +86,7 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         print(f"Erreur d'intégrité : {e.orig}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            status="ko", 
+            statut="ko", 
             message='Erreur d\'intégrité'
         )
     except Exception as e:
@@ -94,13 +94,13 @@ def modify_commentaire(db: Session, commentaire_id: int, commentaire: Commentair
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            status="ko", 
+            statut="ko", 
             message='Une erreur s\'est produite'
         )
     else:
         print("Commentaire modifié avec succès.")
     return {
-        "status": "ok",
+        "statut": "ok",
         "message": "Commentaire modifié avec succès.",
         "data": []
         }
@@ -118,13 +118,13 @@ def delete_commentaire(db: Session, commentaire_id: int, user_id: int):
         print(f"Une erreur s'est produite : {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            status="ko",
+            statut="ko",
             message='Une erreur s\'est produite'
         )
     else:
         print("Commentaire supprimé avec succès.")
     return {
-        "status": "ok",
+        "statut": "ok",
         "message": "Commentaire supprimé avec succès.",
         "data": []
         }
