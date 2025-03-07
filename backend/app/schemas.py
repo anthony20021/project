@@ -58,8 +58,6 @@ class Recette(RecetteBase):
 class CommentaireBase(BaseModel):
     content: str
     note: int
-    created_at: date
-    user_id: int
     recipes_id: int
  
 class CommentaireCreate(CommentaireBase):
