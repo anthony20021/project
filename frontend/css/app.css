@@ -238,6 +238,11 @@ nav a.active {
     }
 }
 
+.meta{
+    display: flex;
+    flex-direction: column;
+}
+
 .form-select {
     width: 100%;
     padding-top: 10px;

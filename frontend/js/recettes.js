@@ -184,7 +184,7 @@ export function init() {
                 <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
                 <h2>${recette.titre}</h2>
                 <div class="meta">
-                    <span>Note: ${generateNote(commentaire.data.data)}<span>
+                    <span style="display: flex; align-items: center;">Note : ${generateNote(commentaire.data.data)}</span>
                     <span>Type: ${recette.type}</span>
                     <span>Temps: ${recette.temps_preparation} min</span>
                 </div>
@@ -197,21 +197,21 @@ export function init() {
                     ${generateIngredientsList(recette.recettes_ingredients, recette.user_id)}
                 </ul>
                 ${generateDetailActions(recette)}
-            </div>
-            <h1>Commentaire<h1>
-            ${generateCommentaire(commentaire)}
-            <h1>Nouveau commentaire<h1>
-            <div>
-                <h3>message</h3>
-                <textarea> </textarea>
-                <h3>Note<h3>
-                <input type="number" />
-                <button name="valider">valider</button>
+                <h1>Commentaire<h1>
+                ${generateCommentaire(commentaire)}
+                <h1>Nouveau commentaire<h1>
+                <div>
+                    <h3>message</h3>
+                    <textarea> </textarea>
+                    <h3>Note<h3>
+                    <input type="number" />
+                    <button name="valider">valider</button>
+                </div>
             </div>
         `;
     }
 
-    function createCommentaire()
+    function createCommentaire(){}
 
     async function getCommentaire(recette_id){
         try {
@@ -226,14 +226,14 @@ export function init() {
         try {
             return commentaire.data.data?.length > 0
                 ? commentaire.data.data.map(i => (
-                    `
+                    /*html*/`
                     <div class="commentaire">
                         contenu : ${i.content} 
                         note : ${i.note} 
                         date : ${i.created_at}
                     </div>`
                 )).join('')
-                : '<div>No comments available</div>';
+                : /*html*/`<p>Aucun commentaire</p>`;
         } catch (error) {
             console.error('Error fetching comments:', error);
             return '<div>Error fetching comments</div>';
@@ -242,15 +242,23 @@ export function init() {
 
     function generateNote(commentaires){
         try {
-            let note = 0;
-            const nbCommentaire = commentaires.length;
-            commentaires.forEach(commentaire => {
-                note += parseInt(commentaire.note)
-            });
-            note = note/nbCommentaire
-            return /*html*/`
-                <p>${note.toFixed(1)}</p>
-            `;
+            if(commentaires.length > 0){
+                let note = 0;
+                const nbCommentaire = commentaires.length;
+                commentaires.forEach(commentaire => {
+                    note += parseInt(commentaire.note)
+                });
+                note = note/nbCommentaire
+                return /*html*/`
+                    <p> ${note.toFixed(1)}</p>
+                `;
+
+            }
+            else{
+                return /*html*/`
+                    <p>Pas de note</p>
+                `
+            }
         }
         catch (error){
             console.error(error)
