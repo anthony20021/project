@@ -179,7 +179,7 @@ export function init() {
 
     function generateDetailHTML(recette) {
         return /*html*/`
-            <div class="recette-detail">
+            <div class="recette-detail" data-recette-id="${recette.id}">
                 <button id="backButton" class="button" style="margin-bottom: 20px;">← Retour</button>
                 <h2>${recette.titre}</h2>
                 <div class="meta">
@@ -199,11 +199,20 @@ export function init() {
         `;
     }
 
-    function generateIngredientsList(ingredients) {
+    function generateIngredientsList(ingredients, user_id) {
         return ingredients?.length > 0
-            ? ingredients.map(i => `<li>${i.ingredient.name} - ${i.quantity}</li>`).join('')
+            ? ingredients.map(i => {
+                const deleteButton = (user_id == i.user_id) 
+                    ? /*html*/`<button class="remove-ingredient button" data-id="${i.ingredient_id}" style="background-color : red; width: auto;">X</button>` 
+                    : '';
+    
+                return /*html*/`
+                    <li>${i.ingredient.name} - ${i.quantity} ${deleteButton}</li>
+                `;
+            }).join('')
             : '<li>Aucun ingrédient</li>';
     }
+    
 
     function generateDetailActions(recette) {
         return `
@@ -212,7 +221,7 @@ export function init() {
     }
 
     function generateIngredientForm() {
-        return `
+        return /*html*/`
             <div class="add-ingredient">
                 <h4>Ajouter un ingrédient</h4>
                 <div class="form-container">
@@ -234,8 +243,34 @@ export function init() {
             recettesDiv.style.display = 'block';
         });
 
+        document.querySelectorAll('.remove-ingredient').forEach(btn => {
+            btn.addEventListener('click', handleIngredientDelete);
+        });
+
         document.querySelector('.favorite-btn')?.addEventListener('click', handleFavorite);
     }
+
+    async function handleIngredientDelete(event) {
+        const button = event.target;
+        const ingredientId = button.dataset.id;
+        const recetteId = button.closest('.recette-detail').dataset.recetteId;
+
+        console.log("Recette ID:", recetteId);
+        console.log("Ingrédient ID:", ingredientId);
+    
+        if (!recetteId || !ingredientId) {
+            handleError("Erreur", "ID de recette ou d'ingrédient manquant.");
+            return;
+        }
+    
+        try {
+            await del(`recettes/ingredients`, { recette_id: recetteId, ingredient_id: ingredientId });
+            showRecetteDetails(recetteId); 
+        } catch (error) {
+            handleError("Erreur de suppression d'ingrédient", error);
+        }
+    }
+    
 
     async function initIngredientForm(recetteId) {
         const ingredients = await fetchIngredients();
