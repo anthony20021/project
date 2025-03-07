@@ -75,11 +75,10 @@ class Recette_ingredientCreate(Recette_ingredient):
 
 
 class Favorie(BaseModel):
-    user_id: int
     recette_id: int
 
 class FavorieCreate(Favorie):
-    pass
+    recette_id: int
 
 class FavorieRead(Favorie):
     class Config:

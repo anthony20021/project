@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
+
 <body>
     <nav>
         <a href="#" data-link="home"><img id="logo" src="ressources/logo.png"></a>
@@ -20,18 +22,47 @@
 
     <div id="content">
     </div>
+
     <script src="js/routeur.js" type="module"></script>
+
+    <footer style="background-color: #333; color: white; padding: 40px 20px; text-align: center; margin-top: 80px;">
+        <p style="margin-bottom: 20px;">© 2025 Encouniamane - Tous droits réservés</p>
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <a href="#" style="color: white; text-decoration: none;">Conditions d'utilisation</a>
+            <a href="#" style="color: white; text-decoration: none;">Politique de confidentialité</a>
+            <a href="#" style="color: white; text-decoration: none;">Contact</a>
+        </div>
+    </footer>
 </body>
+
 </html>
 
 <style>
-    #content{
-        height: 100%;
-        width: 100%;
-    }
-    #logo{
+    #logo {
         height: 50px;
         width: 50px;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    #content {
+        flex: 1;
+        padding-bottom: 80px;
+        /* Ajoute un espace égal à la hauteur du footer */
+    }
+
+    footer {
+        margin-top: auto;
+        /* Pousse le footer vers le bas */
+        /* Conservez vos styles existants */
+        background-color: #333;
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
     }
 </style>
 <script>
@@ -41,11 +72,13 @@
         document.querySelector('a[data-link="register"]').style.display = 'none';
         document.querySelector('a[data-link="login"]').style.display = 'none';
         document.getElementById('logout').style.display = 'block';
+        document.querySelector('a[data-link="favori"]').style.display = 'block'
     }
-    else{
+    else {
         document.querySelector('a[data-link="register"]').style.display = 'block';
         document.querySelector('a[data-link="login"]').style.display = 'block';
         document.getElementById('logout').style.display = 'none';
+        document.querySelector('a[data-link="favori"]').style.display = 'none'
     }
 
     const logout = () => {
