@@ -240,20 +240,21 @@ export function init() {
     function generateCommentaire(commentaire) {
         try {
             return commentaire.data.data?.length > 0
-                ? commentaire.data.data.map(i => (
-                    /*html*/`
+                ? commentaire.data.data.map(i => {
+                    return /*html*/`
                     <div class="commentaire">
-                        contenu : ${i.content} 
-                        note : ${i.note} 
-                    </div>`
-                )).join('')
+                        <p>contenu : ${i.content}</p> 
+                        <p>note : ${i.note}</p>
+                        ${i.user_id == user_id ? `<button class="button" data-id="${i.id}" style="background-color : red;">Supprimer</button>` : ""}
+                    </div>`;
+                }).join('')
                 : /*html*/`<p>Aucun commentaire</p>`;
         } catch (error) {
             console.error('Error fetching comments:', error);
             return '<div>Error fetching comments</div>';
         }
     }
-
+    
     function generateNote(commentaires){
         try {
             if(commentaires.length > 0){
